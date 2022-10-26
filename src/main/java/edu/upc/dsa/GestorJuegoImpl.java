@@ -6,6 +6,7 @@ import edu.upc.dsa.models.Object;
 import java.util.*;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 public class GestorJuegoImpl implements GestorJuego {
@@ -82,7 +83,7 @@ public class GestorJuegoImpl implements GestorJuego {
         return u.getMisObjetos();
     }
 
-   ////////////////////////////////
+   ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public int getNumUser(){
         int numUser = this.users.size();
@@ -95,107 +96,54 @@ public class GestorJuegoImpl implements GestorJuego {
         return numObject;
     }
     public HashMap<String,User> getUsers(){
+        logger.info("users " + users);
         return this.users;
     }
     public List<Object> getCatalogo(){
+        logger.info("catalogo " + catalogo);
         return this.catalogo;
     }
+
+    @Override
     public User getUser(String id){
         User u = this.users.get(id);
         if (u.getId().equals(id)) {
             return users.get(id);
         }
+        logger.info("getUser("+id+"): "+u);
         return null;
     }
+
+    @Override
     public Object getObject(String nombre){
         for (Object o : catalogo){
             if(o.getNombre().equals(nombre)){
                 return o;
             }
+            logger.info("getObject("+nombre+"): "+o);
         }
         return null;
     }
 
     @Override
     public void deleteUser(String id) {
-
         User user = this.getUser(id);
         if (user==null) {
             logger.warn("not found " + user);
         }
         else logger.info(user+" deleted ");
-
         this.users.remove(users);
     }
 
-/**
-    public int size() {
-        int ret = this.tracks.size();
-        logger.info("size " + ret);
-
-        return ret;
-    }
-
-    public User addUser(User t) {
-        logger.info("new Track " + t);
-
-        this.tracks.add (t);
-        logger.info("new Track added");
-        return t;
-    }
-
-    public User addUser(String title, String singer) {
-        return this.addUser(new User(title, singer));
-    }
-
-    public User getUser(String id) {
-        logger.info("getTrack("+id+")");
-
-        for (User t: this.tracks) {
-            if (t.getId().equals(id)) {
-                logger.info("getTrack("+id+"): "+t);
-
-                return t;
-            }
-        }
-
-        logger.warn("not found " + id);
-        return null;
-    }
-
-    public List<User> findAll() {
-        return this.tracks;
-    }
-
+    /**
     @Override
-    public void deleteUser(String id) {
-
-        User t = this.getUser(id);
-        if (t==null) {
-            logger.warn("not found " + t);
+    public void postUser(String id) {
+        User user = this.getUser(id);
+        if (user==null) {
+            logger.warn("not found " + user);
         }
-        else logger.info(t+" deleted ");
-
-        this.tracks.remove(t);
-
-    }
-
-    @Override
-    public User updateUser(User p) {
-        User t = this.getUser(p.getId());
-
-        if (t!=null) {
-            logger.info(p+" rebut!!!! ");
-
-            t.setSinger(p.getSinger());
-            t.setTitle(p.getTitle());
-
-            logger.info(t+" updated ");
-        }
-        else {
-            logger.warn("not found "+p);
-        }
-
-        return t;
+        else logger.info(user+" deleted ");
+        this.users.remove(users);
     }*/
+
 }

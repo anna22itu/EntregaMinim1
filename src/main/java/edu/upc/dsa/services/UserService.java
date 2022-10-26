@@ -3,6 +3,7 @@ package edu.upc.dsa.services;
 
 import edu.upc.dsa.GestorJuego;
 import edu.upc.dsa.GestorJuegoImpl;
+import edu.upc.dsa.models.Object;
 import edu.upc.dsa.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,7 +39,7 @@ public class UserService {
     })
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTracks() {
+    public Response getUsers() {
 
         HashMap<String,User> users = this.gj.getUsers();
 
@@ -55,10 +56,24 @@ public class UserService {
     })
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTrack(@PathParam("id") String id) {
-        User t = this.gj.getUser(id);
-        if (t == null) return Response.status(404).build();
-        else  return Response.status(201).entity(t).build();
+    public Response getUser(@PathParam("id") String id) {
+        User u = this.gj.getUser(id);
+        if (u == null) return Response.status(404).build();
+        else  return Response.status(201).entity(u).build();
+    }
+
+    @GET
+    @ApiOperation(value = "get a User", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Object.class),
+            @ApiResponse(code = 404, message = "Track not found")
+    })
+    @Path("/{nombre}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getObject(@PathParam("nombre") String nombre) {
+        Object o = this.gj.getObject(nombre);
+        if (o == null) return Response.status(404).build();
+        else  return Response.status(201).entity(o).build();
     }
 
     @DELETE
@@ -68,29 +83,12 @@ public class UserService {
             @ApiResponse(code = 404, message = "Track not found")
     })
     @Path("/{id}")
-    public Response deleteTrack(@PathParam("id") String id) {
-        User t = this.gj.getUser(id);
-        if (t == null) return Response.status(404).build();
+    public Response deleteUser(@PathParam("id") String id) {
+        User u = this.gj.getUser(id);
+        if (u == null) return Response.status(404).build();
         else this.gj.deleteUser(id);
         return Response.status(201).build();
     }
-
-    @PUT
-    @ApiOperation(value = "update a User", notes = "asdasd")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
-            @ApiResponse(code = 404, message = "Track not found")
-    })
-    @Path("/")
-    public Response updateTrack(User user) {
-
-        User t = this.gj.updateUser(user);
-
-        if (t == null) return Response.status(404).build();
-
-        return Response.status(201).build();
-    }
-
 
 
     @POST
@@ -98,16 +96,44 @@ public class UserService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response= User.class),
             @ApiResponse(code = 500, message = "Validation Error")
-
     })
-
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response newTrack(User user) {
-
+    public Response resgisterUser(User user) {
         if (user.getCorreo()==null || user.getPassword()==null)  return Response.status(500).entity(user).build();
-        this.gj.registerUser(user);
+        this.gj.registerUser(user.getId(), user.getNombre(), user.getApellidos(), user.getNacimiento(), user.getCorreo(), user.getPassword());
         return Response.status(201).entity(user).build();
     }
+
+
+    @POST
+    @ApiOperation(value = "create a new User", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response= User.class),
+            @ApiResponse(code = 500, message = "Validation Error")
+    })
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response logIn(User user) {
+        if (user.getCorreo()==null || user.getPassword()==null)  return Response.status(500).entity(user).build();
+        this.gj.logIn(user.getCorreo(), user.getPassword());
+        return Response.status(201).entity(user).build();
+    }
+
+
+    @GET
+    @ApiOperation(value = "get a User", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = User.class),
+            @ApiResponse(code = 404, message = "Track not found")
+    })
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response ordenarUserAlfabet() {
+        List<User> u = this.gj.ordenarUserAlfabet();
+        if (u == null) return Response.status(404).build();
+        else  return Response.status(201).entity(u).build();
+    }
+
 
 }
