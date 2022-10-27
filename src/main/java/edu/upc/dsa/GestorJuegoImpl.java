@@ -1,7 +1,7 @@
 package edu.upc.dsa;
 
 import edu.upc.dsa.models.User;
-import edu.upc.dsa.models.Object;
+import edu.upc.dsa.models.MyObject;
 
 import java.util.*;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 
 public class GestorJuegoImpl implements GestorJuego {
     private static GestorJuego instance;
-    private List<Object> catalogo;
+    private List<MyObject> catalogo;
     private HashMap<String, User> users;
     final static Logger logger = Logger.getLogger(GestorJuegoImpl.class);
 
@@ -57,28 +57,28 @@ public class GestorJuegoImpl implements GestorJuego {
         return resultado;
     }
 
-    public void addObject(Object o){
+    public void addObject(MyObject o){
         catalogo.add(o);
     }
 
-    public List<Object> ordenarObjectByPrice (){
-        this.catalogo.sort(new Comparator<Object>() {
+    public List<MyObject> ordenarObjectByPrice (){
+        this.catalogo.sort(new Comparator<MyObject>() {
             @Override
-            public int compare(Object o2, Object o1) {
+            public int compare(MyObject o2, MyObject o1) {
                 return Double.compare(o1.getCoins(), o2.getCoins());
             }
         });
         return catalogo;
     }
 
-    public void purchaseObject(Object o,String key){
+    public void purchaseObject(MyObject o, String key){
         User user = this.users.get(key);
         if(user != null){
             user.setMisObjetos(o);
         }
     }
 
-    public List<Object> listObjectByUser (String id){
+    public List<MyObject> listObjectByUser (String id){
         User u = users.get(id);
         return u.getMisObjetos();
     }
@@ -99,7 +99,7 @@ public class GestorJuegoImpl implements GestorJuego {
         logger.info("users " + users);
         return this.users;
     }
-    public List<Object> getCatalogo(){
+    public List<MyObject> getCatalogo(){
         logger.info("catalogo " + catalogo);
         return this.catalogo;
     }
@@ -115,8 +115,8 @@ public class GestorJuegoImpl implements GestorJuego {
     }
 
     @Override
-    public Object getObject(String nombre){
-        for (Object o : catalogo){
+    public MyObject getObject(String nombre){
+        for (MyObject o : catalogo){
             if(o.getNombre().equals(nombre)){
                 return o;
             }

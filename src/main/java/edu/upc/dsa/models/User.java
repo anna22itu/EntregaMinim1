@@ -1,7 +1,5 @@
 package edu.upc.dsa.models;
 
-import edu.upc.dsa.util.RandomUtils;
-
 import java.util.LinkedList;
 
 public class User {
@@ -13,8 +11,11 @@ public class User {
     private String password;
     private String id;
     private double saldo;
-    private LinkedList<Object> misObjetos;
+    private LinkedList<MyObject> misObjetos;
 
+    public User(){
+
+    }
     public User(String id, String nombre, String apellidos, String nacimiento, String correo, String password) {
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -26,7 +27,7 @@ public class User {
         this.misObjetos = new LinkedList<>();
     }
 
-    public LinkedList<Object> getMisObjetos() {
+    public LinkedList<MyObject> getMisObjetos() {
         return misObjetos;
     }
 
@@ -34,7 +35,7 @@ public class User {
         return misObjetos.size();
     }
 
-    public void setMisObjetos(Object miObjeto) {
+    public void setMisObjetos(MyObject miObjeto) {
         this.misObjetos.add(miObjeto);
         this.saldo = this.getSaldo() - miObjeto.getCoins();
     }

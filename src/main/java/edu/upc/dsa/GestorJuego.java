@@ -1,13 +1,12 @@
 package edu.upc.dsa;
 
 import edu.upc.dsa.models.User;
-import edu.upc.dsa.models.Object;
+import edu.upc.dsa.models.MyObject;
 
 import java.util.List;
 
 
 import java.util.HashMap;
-import java.util.List;
 
 public interface GestorJuego {
     /**
@@ -16,18 +15,18 @@ public interface GestorJuego {
     public void registerUser(String id, String nombre, String apellidos, String nacimiento, String correo, String password);
     public List<User> ordenarUserAlfabet ();
     public boolean logIn(String correo, String password);
-    public void addObject(Object o);
-    public List<Object> ordenarObjectByPrice ();
-    public void purchaseObject(Object o,String u);
-    public List<Object> listObjectByUser (String id);
+    public void addObject(MyObject o);
+    public List<MyObject> ordenarObjectByPrice ();
+    public void purchaseObject(MyObject o, String u);
+    public List<MyObject> listObjectByUser (String id);
 
 
     public int getNumUser();
     public int getNumObject();
     public HashMap<String,User> getUsers();
-    public List<Object> getCatalogo();
+    public List<MyObject> getCatalogo();
     public User getUser(String id);
-    public Object getObject(String id);
+    public MyObject getObject(String id);
     public void deleteUser(String id);
 
 }

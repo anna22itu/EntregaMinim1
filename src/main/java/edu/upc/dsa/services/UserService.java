@@ -3,7 +3,7 @@ package edu.upc.dsa.services;
 
 import edu.upc.dsa.GestorJuego;
 import edu.upc.dsa.GestorJuegoImpl;
-import edu.upc.dsa.models.Object;
+import edu.upc.dsa.models.MyObject;
 import edu.upc.dsa.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -65,13 +65,13 @@ public class UserService {
     @GET
     @ApiOperation(value = "get a User", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Object.class),
+            @ApiResponse(code = 201, message = "Successful", response = MyObject.class),
             @ApiResponse(code = 404, message = "Track not found")
     })
-    @Path("/{nombre}")
+    @Path("/Object/{nombre}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getObject(@PathParam("nombre") String nombre) {
-        Object o = this.gj.getObject(nombre);
+        MyObject o = this.gj.getObject(nombre);
         if (o == null) return Response.status(404).build();
         else  return Response.status(201).entity(o).build();
     }
@@ -112,7 +112,7 @@ public class UserService {
             @ApiResponse(code = 201, message = "Successful", response= User.class),
             @ApiResponse(code = 500, message = "Validation Error")
     })
-    @Path("/")
+    @Path("/logIn/")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response logIn(User user) {
         if (user.getCorreo()==null || user.getPassword()==null)  return Response.status(500).entity(user).build();
@@ -127,7 +127,7 @@ public class UserService {
             @ApiResponse(code = 201, message = "Successful", response = User.class),
             @ApiResponse(code = 404, message = "Track not found")
     })
-    @Path("/")
+    @Path("/sort/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response ordenarUserAlfabet() {
         List<User> u = this.gj.ordenarUserAlfabet();

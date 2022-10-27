@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.upc.dsa.models.User;
-import edu.upc.dsa.models.Object;
+import edu.upc.dsa.models.MyObject;
 
 import java.util.List;
 
@@ -22,17 +22,17 @@ public class GestorJuegoImplTest {
         gj.registerUser("22222","David",  "Rincon", "13/01/1994","drincon@gmail.com","dsapracticar");
         gj.registerUser("33333","Mario",  "Hernández", "06/12/1989","mhernandez@gmail.com","nosequeponer");
 
-        Object o1 = new Object("Espada", "Espada con poderes", 3.1);
+        MyObject o1 = new MyObject("Espada", "Espada con poderes", 3.1);
         gj.addObject(o1);
-        Object o2 =  new Object("Anillo", "Anillo teletransportador", 2.7);
+        MyObject o2 =  new MyObject("Anillo", "Anillo teletransportador", 2.7);
         gj.addObject(o2);
-        Object o3 = new Object("Traje", "Traje invisible", 4.5);
+        MyObject o3 = new MyObject("Traje", "Traje invisible", 4.5);
         gj.addObject(o3);
-        Object o4 = new Object("Gafas", "Gafas visión del futuro", 5.25);
+        MyObject o4 = new MyObject("Gafas", "Gafas visión del futuro", 5.25);
         gj.addObject(o4);
-        Object o5 = new Object("Pistola", "Pistola laser", 1.35);
+        MyObject o5 = new MyObject("Pistola", "Pistola laser", 1.35);
         gj.addObject(o5);
-        Object o6 = new Object("Capa", "Capa voladora", 5);
+        MyObject o6 = new MyObject("Capa", "Capa voladora", 5);
         gj.addObject(o6);
 
         gj.purchaseObject(gj.getObject("Anillo"),"11111");
@@ -74,14 +74,14 @@ public class GestorJuegoImplTest {
     @Test
     public void addObject() {
         Assert.assertEquals(6, this.gj.getNumObject());
-        Object o7 = new Object("Pocima", "Capa voladora", 5);
+        MyObject o7 = new MyObject("Pocima", "Capa voladora", 5);
         gj.addObject(o7);
         Assert.assertEquals(7, this.gj.getNumObject());
     }
 
     @Test
     public void ordenarObjectsByPrice() {
-        List<Object> objects = this.gj.ordenarObjectByPrice();
+        List<MyObject> objects = this.gj.ordenarObjectByPrice();
 
         Assert.assertEquals("Gafas", objects.get(0).getNombre());
         Assert.assertEquals(5.25, objects.get(0).getCoins(),0);
