@@ -23,7 +23,7 @@ public interface GestorJuego {
 
     public int getNumUser();
     public int getNumObject();
-    public HashMap<String,User> getUsers();
+    public List<User> getUsers();
     public List<MyObject> getCatalogo();
     public User getUser(String id);
     public MyObject getObject(String id);

@@ -30,6 +30,20 @@ public class UserService {
             this.gj.registerUser("22222","David",  "Rincon", "13/01/1994","drincon@gmail.com","dsapracticar");
             this.gj.registerUser("33333","Mario",  "Hernández", "06/12/1989","mhernandez@gmail.com","nosequeponer");
         }
+        if (gj.getNumObject()==0) {
+            MyObject o1 = new MyObject("Espada", "Espada con poderes", 3.1);
+            gj.addObject(o1);
+            MyObject o2 =  new MyObject("Anillo", "Anillo teletransportador", 2.7);
+            gj.addObject(o2);
+            MyObject o3 = new MyObject("Traje", "Traje invisible", 4.5);
+            gj.addObject(o3);
+            MyObject o4 = new MyObject("Gafas", "Gafas visión del futuro", 5.25);
+            gj.addObject(o4);
+            MyObject o5 = new MyObject("Pistola", "Pistola laser", 1.35);
+            gj.addObject(o5);
+            MyObject o6 = new MyObject("Capa", "Capa voladora", 5);
+            gj.addObject(o6);
+        }
     }
 
     @GET
@@ -41,9 +55,9 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsers() {
 
-        HashMap<String,User> users = this.gj.getUsers();
+        List<User> users = this.gj.getUsers();
 
-        GenericEntity<HashMap<String,User>> entity = new GenericEntity<HashMap<String,User>>(users) {};
+        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
         return Response.status(201).entity(entity).build()  ;
 
     }

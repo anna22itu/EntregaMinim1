@@ -95,9 +95,10 @@ public class GestorJuegoImpl implements GestorJuego {
         logger.info("size " + numObject);
         return numObject;
     }
-    public HashMap<String,User> getUsers(){
+    public List<User> getUsers(){
         logger.info("users " + users);
-        return this.users;
+        List<User> userList = new ArrayList<>(this.users.values());
+        return userList;
     }
     public List<MyObject> getCatalogo(){
         logger.info("catalogo " + catalogo);
