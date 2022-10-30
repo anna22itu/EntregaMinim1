@@ -127,13 +127,16 @@ public class GestorJuegoImpl implements GestorJuego {
     }
 
     @Override
-    public void deleteUser(String id) {
+    public boolean deleteUser(String id) {
         User user = this.getUser(id);
+        boolean bol = false;
         if (user==null) {
             logger.warn("not found " + user);
+            bol = true;
         }
         else logger.info(user+" deleted ");
         this.users.remove(users);
+        return bol;
     }
 
     /**

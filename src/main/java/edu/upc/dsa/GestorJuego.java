@@ -27,6 +27,6 @@ public interface GestorJuego {
     public List<MyObject> getCatalogo();
     public User getUser(String id);
     public MyObject getObject(String id);
-    public void deleteUser(String id);
+    public boolean deleteUser(String id);
 
 }
