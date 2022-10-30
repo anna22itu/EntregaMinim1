@@ -64,6 +64,20 @@ public class UserService {
     }
 
     @GET
+    @ApiOperation(value = "get all Objects", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
+    })
+    @Path("/MyObject")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getObjects() {
+
+        List<MyObject> objects = this.gj.getCatalogo();
+        GenericEntity<List<MyObject>> entity = new GenericEntity<List<MyObject>>(objects) {};
+        return Response.status(201).entity(entity).build()  ;
+
+    }
+    @GET
     @ApiOperation(value = "get a User", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = User.class),
@@ -78,12 +92,12 @@ public class UserService {
     }
 
     @GET
-    @ApiOperation(value = "get a User", notes = "asdasd")
+    @ApiOperation(value = "get an Object", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = MyObject.class),
             @ApiResponse(code = 404, message = "Track not found")
     })
-    @Path("/Object/{nombre}")
+    @Path("/MyObject/{nombre}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getObject(@PathParam("nombre") String nombre) {
         MyObject o = this.gj.getObject(nombre);
@@ -122,7 +136,7 @@ public class UserService {
 
 
     @POST
-    @ApiOperation(value = "create a new User", notes = "asdasd")
+    @ApiOperation(value = "logIn User", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response= User.class),
             @ApiResponse(code = 500, message = "Validation Error")
@@ -137,7 +151,7 @@ public class UserService {
 
 
     @GET
-    @ApiOperation(value = "get a User", notes = "asdasd")
+    @ApiOperation(value = "get a all User alphabetically arranged", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = User.class),
             @ApiResponse(code = 404, message = "Track not found")
@@ -150,5 +164,19 @@ public class UserService {
         else  return Response.status(201).entity(u).build();
     }
 
+
+    @GET
+    @ApiOperation(value = "get a all Objects of a User", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = User.class),
+            @ApiResponse(code = 404, message = "Track not found")
+    })
+    @Path("/MyObject/sort/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listObjectByUser(@PathParam("id") String id) {
+        List<MyObject> u = this.gj.listObjectByUser(id);
+        if (u == null) return Response.status(404).build();
+        else  return Response.status(201).entity(u).build();
+    }
 
 }
