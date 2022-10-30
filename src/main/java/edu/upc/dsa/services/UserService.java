@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@Api(value = "/tracks", description = "Endpoint to Track Service")
-@Path("/tracks")
+@Api(value = "/User", description = "Endpoint to User Service")
+@Path("/User")
 public class UserService {
 
     private GestorJuego gj;
