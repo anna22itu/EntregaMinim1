@@ -27,9 +27,10 @@ public class UserService {
     public UserService() {
         this.gj = GestorJuegoImpl.getInstance();
         if (gj.getNumUser()==0) {
-            this.gj.registerUser("11111" ,"Juan", "lopez", "22/05/1990", "jlopezr@gmail.com","megustadsa");
+            this.gj.registerUser("11111" ,"Juan", "Lopez", "22/05/1990", "jlopezr@gmail.com","megustadsa");
             this.gj.registerUser("22222","David",  "Rincon", "13/01/1994","drincon@gmail.com","dsapracticar");
             this.gj.registerUser("33333","Mario",  "Hernández", "06/12/1989","mhernandez@gmail.com","nosequeponer");
+            this.gj.registerUser("44444","Anna",  "Iturralde", "13/01/2001","annaiturralde@gmail.com","minimo1");
         }
         if (gj.getNumObject()==0) {
             MyObject o1 = new MyObject("Espada", "Espada con poderes", 3.1);
@@ -50,7 +51,7 @@ public class UserService {
     @GET
     @ApiOperation(value = "get all Users", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
+            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List of Users"),
     })
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
@@ -114,7 +115,7 @@ public class UserService {
     @Path("/{id}")
     public Response deleteUser(@PathParam("id") String id) {
         boolean bol = this.gj.deleteUser(id);
-        if (bol == true) return Response.status(404).build();
+        if (bol) return Response.status(404).build();
         else this.gj.deleteUser(id);
         return Response.status(201).build();
     }
@@ -126,7 +127,7 @@ public class UserService {
             @ApiResponse(code = 201, message = "Successful", response= User.class),
             @ApiResponse(code = 500, message = "Validation Error")
     })
-    @Path("/")
+    @Path("/resgisterUser")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response resgisterUser(User user) {
         if (user.getCorreo()==null || user.getPassword()==null)  return Response.status(500).entity(user).build();
@@ -134,21 +135,21 @@ public class UserService {
         return Response.status(201).entity(user).build();
     }
 
-
+/**
     @POST
     @ApiOperation(value = "logIn User", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response= User.class),
             @ApiResponse(code = 500, message = "Validation Error")
     })
-    @Path("/logIn/")
+    @Path("/logIn/{object}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response logIn(User user) {
+    public Response logIn(@PathParam("object") object) {
         if (user.getCorreo()==null || user.getPassword()==null)  return Response.status(500).entity(user).build();
         this.gj.logIn(user.getCorreo(), user.getPassword());
         return Response.status(201).entity(user).build();
     }
-
+*/
 
     @GET
     @ApiOperation(value = "get a all User alphabetically arranged", notes = "asdasd")
@@ -178,5 +179,20 @@ public class UserService {
         if (u == null) return Response.status(404).build();
         else  return Response.status(201).entity(u).build();
     }
+
+    /**
+    @GET
+    @ApiOperation(value = "purchase an Object", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "Track not found")
+    })
+    @Path("/{id}/{MyObject}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response purchaseObject(@PathParam("MyObject") MyObject MyObject,@PathParam("id") String id) {
+        this.gj.purchaseObject(MyObject,id);
+        if (MyObject == null) return Response.status(404).build();
+        else  return Response.status(201).entity(MyObject).build();
+    }*/
 
 }
