@@ -5,6 +5,8 @@ import edu.upc.dsa.GestorJuego;
 import edu.upc.dsa.GestorJuegoImpl;
 import edu.upc.dsa.models.MyObject;
 import edu.upc.dsa.models.User;
+import edu.upc.dsa.models.UserLogIn;
+import edu.upc.dsa.models.UserReg;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -46,6 +48,9 @@ public class UserService {
             MyObject o6 = new MyObject("Capa", "Capa voladora", 5);
             gj.addObject(o6);
         }
+
+        gj.purchaseObject(gj.getObject("Anillo"),"11111");
+        gj.purchaseObject(gj.getObject("Pistola"),"11111");
     }
 
     @GET
@@ -114,8 +119,8 @@ public class UserService {
     })
     @Path("/{id}")
     public Response deleteUser(@PathParam("id") String id) {
-        boolean bol = this.gj.deleteUser(id);
-        if (bol) return Response.status(404).build();
+        User user = this.gj.getUser(id);
+        if (user==null) return Response.status(404).build();
         else this.gj.deleteUser(id);
         return Response.status(201).build();
     }
@@ -129,27 +134,27 @@ public class UserService {
     })
     @Path("/resgisterUser")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response resgisterUser(User user) {
-        if (user.getCorreo()==null || user.getPassword()==null)  return Response.status(500).entity(user).build();
-        this.gj.registerUser(user.getId(), user.getNombre(), user.getApellidos(), user.getNacimiento(), user.getCorreo(), user.getPassword());
-        return Response.status(201).entity(user).build();
+    public Response resgisterUser(UserReg userReg) {
+        if (userReg.getCorreoReg()==null || userReg.getPasswordReg()==null)  return Response.status(500).entity(userReg).build();
+        this.gj.registerUser(userReg.getIdReg(), userReg.getNombreReg(), userReg.getApellidosReg(), userReg.getNacimientoReg(), userReg.getCorreoReg(), userReg.getPasswordReg());
+        return Response.status(201).entity(userReg).build();
     }
 
-/**
+
     @POST
     @ApiOperation(value = "logIn User", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response= User.class),
             @ApiResponse(code = 500, message = "Validation Error")
     })
-    @Path("/logIn/{object}")
+    @Path("/logIn")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response logIn(@PathParam("object") object) {
-        if (user.getCorreo()==null || user.getPassword()==null)  return Response.status(500).entity(user).build();
-        this.gj.logIn(user.getCorreo(), user.getPassword());
-        return Response.status(201).entity(user).build();
+    public Response logIn(UserLogIn userLogIn) {
+        if (userLogIn.getCorreoLI()==null || userLogIn.getPasswordLI()==null)  return Response.status(500).entity(userLogIn).build();
+        if (this.gj.logIn(userLogIn.getCorreoLI(), userLogIn.getPasswordLI())) return Response.status(201).entity(userLogIn).build();
+        else return Response.status(404).entity(userLogIn).build();
     }
-*/
+
 
     @GET
     @ApiOperation(value = "get a all User alphabetically arranged", notes = "asdasd")
@@ -160,9 +165,9 @@ public class UserService {
     @Path("/sort/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response ordenarUserAlfabet() {
-        List<User> u = this.gj.ordenarUserAlfabet();
-        if (u == null) return Response.status(404).build();
-        else  return Response.status(201).entity(u).build();
+        List<User> users = this.gj.ordenarUserAlfabet();
+        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
+        return Response.status(201).entity(entity).build();
     }
 
 
@@ -175,23 +180,23 @@ public class UserService {
     @Path("/{id}/MyObject/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listObjectByUser(@PathParam("id") String id) {
-        List<MyObject> u = this.gj.listObjectByUser(id);
-        if (u == null) return Response.status(404).build();
-        else  return Response.status(201).entity(u).build();
+        List<MyObject> myObjects = this.gj.listObjectByUser(id);
+        GenericEntity<List<MyObject>> entity = new GenericEntity<List<MyObject>>(myObjects) {};
+        return Response.status(201).entity(entity).build();
     }
 
-    /**
+/**
     @GET
     @ApiOperation(value = "purchase an Object", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "Track not found")
     })
-    @Path("/{id}/{MyObject}")
+    @Path("/{id}/{idObject}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response purchaseObject(@PathParam("MyObject") MyObject MyObject,@PathParam("id") String id) {
-        this.gj.purchaseObject(MyObject,id);
-        if (MyObject == null) return Response.status(404).build();
+    public Response purchaseObject(@PathParam("idObject") String idObject,@PathParam("id") String id) {
+        this.gj.purchaseObject(idObject,id);
+        if (idObject == null) return Response.status(404).build();
         else  return Response.status(201).entity(MyObject).build();
     }*/
 

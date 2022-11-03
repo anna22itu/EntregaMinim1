@@ -83,7 +83,7 @@ public class GestorJuegoImpl implements GestorJuego {
         return u.getMisObjetos();
     }
 
-   ///////////////////////////////////////////////////////////////////////////////////////////////
+   //////////////////////////////////////////////////////////////////////////////////////////////////
 
     public int getNumUser(){
         int numUser = this.users.size();
@@ -135,7 +135,7 @@ public class GestorJuegoImpl implements GestorJuego {
             bol = true;
         }
         else logger.info(user+" deleted ");
-        this.users.remove(users);
+        this.users.remove(id);
         return bol;
     }
 

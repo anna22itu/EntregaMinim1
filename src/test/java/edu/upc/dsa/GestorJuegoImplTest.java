@@ -74,7 +74,7 @@ public class GestorJuegoImplTest {
     @Test
     public void addObject() {
         Assert.assertEquals(6, this.gj.getNumObject());
-        MyObject o7 = new MyObject("Pocima", "Capa voladora", 5);
+        MyObject o7 = new MyObject("Pocima", "Pocima con veneno", 5);
         gj.addObject(o7);
         Assert.assertEquals(7, this.gj.getNumObject());
     }
@@ -109,7 +109,7 @@ public class GestorJuegoImplTest {
         gj.purchaseObject(gj.getObject("Traje"),"11111");
         gj.purchaseObject(gj.getObject("Capa"),"11111");
 
-        Assert.assertEquals(36.45,gj.getUser("11111").getSaldo(),0.5); //precisio delta
+        Assert.assertEquals(36.45,gj.getUser("11111").getSaldo(),0.5); //precisio delta quan comparem doubles
         Assert.assertEquals(4,this.gj.getUser("11111").getNumberMisObjetos());
 
     }
