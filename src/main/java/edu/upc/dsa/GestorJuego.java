@@ -17,7 +17,7 @@ public interface GestorJuego {
     public boolean logIn(String correo, String password);
     public void addObject(MyObject o);
     public List<MyObject> ordenarObjectByPrice ();
-    public void purchaseObject(MyObject o, String u);
+    public boolean purchaseObject(String nameObject, String id);
     public List<MyObject> listObjectByUser (String id);
 
 

@@ -35,8 +35,8 @@ public class GestorJuegoImplTest {
         MyObject o6 = new MyObject("Capa", "Capa voladora", 5);
         gj.addObject(o6);
 
-        gj.purchaseObject(gj.getObject("Anillo"),"11111");
-        gj.purchaseObject(gj.getObject("Pistola"),"11111");
+        gj.purchaseObject("Anillo","11111");
+        gj.purchaseObject("Pistola","11111");
     }
 
     @After
@@ -106,8 +106,8 @@ public class GestorJuegoImplTest {
 
     @Test
     public void purchaseObject() {
-        gj.purchaseObject(gj.getObject("Traje"),"11111");
-        gj.purchaseObject(gj.getObject("Capa"),"11111");
+        gj.purchaseObject("Traje","11111");
+        gj.purchaseObject("Capa","11111");
 
         Assert.assertEquals(36.45,gj.getUser("11111").getSaldo(),0.5); //precisio delta quan comparem doubles
         Assert.assertEquals(4,this.gj.getUser("11111").getNumberMisObjetos());
@@ -116,7 +116,7 @@ public class GestorJuegoImplTest {
 
     @Test
     public void listObjectByUser() {
-        gj.purchaseObject(gj.getObject("Traje"),"11111");
+        gj.purchaseObject("Traje","11111");
         Assert.assertEquals(3,this.gj.getUser("11111").getNumberMisObjetos());
 
         Assert.assertEquals(gj.getObject("Anillo"),gj.listObjectByUser("11111").get(0));

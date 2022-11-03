@@ -71,11 +71,14 @@ public class GestorJuegoImpl implements GestorJuego {
         return catalogo;
     }
 
-    public void purchaseObject(MyObject o, String key){
+    public boolean purchaseObject(String nameObject, String key){
         User user = this.users.get(key);
+        boolean bol = false;
         if(user != null){
-            user.setMisObjetos(o);
+            user.setMisObjetos(this.getObject(nameObject));
+            bol = true;
         }
+        return bol;
     }
 
     public List<MyObject> listObjectByUser (String id){

@@ -49,8 +49,8 @@ public class UserService {
             gj.addObject(o6);
         }
 
-        gj.purchaseObject(gj.getObject("Anillo"),"11111");
-        gj.purchaseObject(gj.getObject("Pistola"),"11111");
+        gj.purchaseObject("Anillo","11111");
+        gj.purchaseObject("Pistola","11111");
     }
 
     @GET
@@ -185,19 +185,19 @@ public class UserService {
         return Response.status(201).entity(entity).build();
     }
 
-/**
+
     @GET
     @ApiOperation(value = "purchase an Object", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "Track not found")
     })
-    @Path("/{id}/{idObject}")
+    @Path("/{id}/{nameObject}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response purchaseObject(@PathParam("idObject") String idObject,@PathParam("id") String id) {
-        this.gj.purchaseObject(idObject,id);
-        if (idObject == null) return Response.status(404).build();
-        else  return Response.status(201).entity(MyObject).build();
-    }*/
+    public Response purchaseObject(@PathParam("nameObject") String nameObject,@PathParam("id") String id) {
+        boolean resultado = this.gj.purchaseObject(nameObject,id);
+        if (resultado) return Response.status(201).build();
+        else  return Response.status(404).entity(resultado).build();
+    }
 
 }
