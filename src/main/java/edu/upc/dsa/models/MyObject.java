@@ -5,9 +5,10 @@ public class MyObject {
     private String descripcion;
     private double coins;
 
-    public MyObject(){
+    public MyObject() {
 
     }
+
     public MyObject(String nombre, String descripcion, double coins) {
         this.nombre = nombre;
         this.descripcion = descripcion;

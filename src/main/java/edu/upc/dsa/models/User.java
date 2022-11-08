@@ -13,9 +13,10 @@ public class User {
     private double saldo;
     private LinkedList<MyObject> misObjetos;
 
-    public User(){
+    public User() {
 
     }
+
     public User(String id, String nombre, String apellidos, String nacimiento, String correo, String password) {
         this.nombre = nombre;
         this.apellidos = apellidos;
