@@ -86,6 +86,14 @@ public class GestorJuegoImpl implements GestorJuego {
         return u.getMisObjetos();
     }
 
+    public void updateUser(String id, String nombre, String apellidos, String nacimiento, String correo, String password){
+        User u = users.get(id);
+        u.setNombre(nombre);
+        u.setApellidos(apellidos);
+        u.setNacimiento(nacimiento);
+        u.setCorreo(correo);
+        u.setPassword(password);
+    }
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     public int getNumUser() {
@@ -130,6 +138,12 @@ public class GestorJuegoImpl implements GestorJuego {
             logger.info("getObject(" + nombre + "): " + o);
         }
         return null;
+    }
+
+    @Override
+    public int getnumObjectUser(String id) {
+        int num = this.users.get(id).getNumberMisObjetos();
+        return num;
     }
 
     @Override

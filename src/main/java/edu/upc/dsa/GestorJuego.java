@@ -23,6 +23,8 @@ public interface GestorJuego {
 
     public List<MyObject> listObjectByUser(String id);
 
+    public void updateUser(String id, String nombre, String apellidos, String nacimiento, String correo, String password);
+
 
     public int getNumUser();
 
@@ -37,6 +39,7 @@ public interface GestorJuego {
     public MyObject getObject(String id);
 
     public boolean deleteUser(String id);
-    // public updateUser(User u);
+
+    public int getnumObjectUser(String id);
 
 }

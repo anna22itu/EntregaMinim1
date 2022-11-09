@@ -28,4 +28,9 @@ public class UserLogIn {
     public void setPasswordLI(String passwordLI) {
         this.passwordLI = passwordLI;
     }
+
+    /**
+    public Boolean isEqual(UserLogIn userLogIn) {
+        return (this.correoLI.equals(userLogIn.getCorreoLI()) && this.passwordLI.equals(userLogIn.getPasswordLI()));
+    }*/
 }

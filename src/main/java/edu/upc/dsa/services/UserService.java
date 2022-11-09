@@ -206,4 +206,20 @@ public class UserService {
         else return Response.status(404).entity(resultado).build();
     }
 
+
+    @PUT
+    @ApiOperation(value = "update a User", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "Track not found")
+    })
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateUser(UserReg user) {
+        this.gj.updateUser(user.getIdReg(),user.getNombreReg(),user.getApellidosReg(),user.getNacimientoReg(),user.getCorreoReg(),user.getPasswordReg());
+        if (user.getIdReg() == null) return Response.status(404).build();
+        else return Response.status(201).entity(user).build();
+    }
+
+
 }

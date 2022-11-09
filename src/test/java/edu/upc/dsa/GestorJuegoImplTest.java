@@ -112,12 +112,15 @@ public class GestorJuegoImplTest {
 
     @Test
     public void purchaseObject() {
+        Assert.assertEquals(2, this.gj.getnumObjectUser("11111"));
+
         gj.purchaseObject("Traje", "11111");
         gj.purchaseObject("Capa", "11111");
 
         Assert.assertEquals(36.45, gj.getUser("11111").getSaldo(), 0.5); //precisio delta quan comparem doubles
         Assert.assertEquals(4, this.gj.getUser("11111").getNumberMisObjetos());
 
+        Assert.assertEquals(4, this.gj.getnumObjectUser("11111"));
     }
 
     @Test
@@ -128,6 +131,14 @@ public class GestorJuegoImplTest {
         Assert.assertEquals(gj.getObject("Anillo"), gj.listObjectByUser("11111").get(0));
         Assert.assertEquals(gj.getObject("Pistola"), gj.listObjectByUser("11111").get(1));
         Assert.assertEquals(gj.getObject("Traje"), gj.listObjectByUser("11111").get(2));
+    }
+
+    @Test
+    public void updateUser() {
+        gj.updateUser("22222", "David", "Rincon", "13/10/1995", "drincon@gmail.com", "jye-21-dneidsfw");
+
+        Assert.assertEquals(gj.getUser ("22222").getNacimiento(), "13/10/1995");
+        Assert.assertEquals(gj.getUser ("22222").getPassword(), "jye-21-dneidsfw");
     }
 
 }
