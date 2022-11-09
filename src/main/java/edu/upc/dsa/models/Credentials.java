@@ -1,14 +1,14 @@
 package edu.upc.dsa.models;
 
-public class UserLogIn {
+public class Credentials {
 
     private String correoLI;
     private String passwordLI;
 
-    public UserLogIn() {
+    public Credentials() {
     }
 
-    public UserLogIn(String correoLI, String passwordLI) {
+    public Credentials(String correoLI, String passwordLI) {
         this.correoLI = correoLI;
         this.passwordLI = passwordLI;
     }

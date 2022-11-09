@@ -5,7 +5,7 @@ import edu.upc.dsa.GestorJuego;
 import edu.upc.dsa.GestorJuegoImpl;
 import edu.upc.dsa.models.MyObject;
 import edu.upc.dsa.models.User;
-import edu.upc.dsa.models.UserLogIn;
+import edu.upc.dsa.models.Credentials;
 import edu.upc.dsa.models.UserReg;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -151,7 +151,7 @@ public class UserService {
     })
     @Path("/logIn")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response logIn(UserLogIn userLogIn) {
+    public Response logIn(Credentials userLogIn) {
         if (userLogIn.getCorreoLI() == null || userLogIn.getPasswordLI() == null)
             return Response.status(500).entity(userLogIn).build();
         if (this.gj.logIn(userLogIn.getCorreoLI(), userLogIn.getPasswordLI()))

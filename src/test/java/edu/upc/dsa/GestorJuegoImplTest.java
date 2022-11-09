@@ -46,6 +46,10 @@ public class GestorJuegoImplTest {
     @Test
     public void registerUser() {
         Assert.assertEquals(3, this.gj.getNumUser());
+
+        gj.registerUser("77777", "Emma", "Garcia", "18/11/1990", "emmagarcia@gmail.com", "contraseña");
+
+        Assert.assertEquals(4, this.gj.getNumUser());
     }
 
 
