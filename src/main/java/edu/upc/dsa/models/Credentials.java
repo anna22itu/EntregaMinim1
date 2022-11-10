@@ -2,31 +2,32 @@ package edu.upc.dsa.models;
 
 public class Credentials {
 
-    private String correoLI;
-    private String passwordLI;
+    private String idPartida;
+    private String idUser;
 
     public Credentials() {
     }
 
-    public Credentials(String correoLI, String passwordLI) {
-        this.correoLI = correoLI;
-        this.passwordLI = passwordLI;
+
+    public Credentials(String idPartida, String idUser) {
+        this.idPartida = idPartida;
+        this.idUser = idUser;
     }
 
-    public String getCorreoLI() {
-        return correoLI;
+    public String getidPartida() {
+        return idPartida;
     }
 
-    public void setCorreoLI(String correoLI) {
-        this.correoLI = correoLI;
+    public void setidPartida(String idPartida) {
+        this.idPartida = idPartida;
     }
 
-    public String getPasswordLI() {
-        return passwordLI;
+    public String getidUser() {
+        return idUser;
     }
 
-    public void setPasswordLI(String passwordLI) {
-        this.passwordLI = passwordLI;
+    public void setidUser(String idUser) {
+        this.idUser = idUser;
     }
 
     /**

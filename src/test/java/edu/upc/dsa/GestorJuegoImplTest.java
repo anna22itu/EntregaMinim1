@@ -1,12 +1,11 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.models.MyObject;
 import edu.upc.dsa.models.User;
+import edu.upc.dsa.models.Partida;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.List;
 
 public class GestorJuegoImplTest {
@@ -21,27 +20,32 @@ public class GestorJuegoImplTest {
         gj.registerUser("22222", "David", "Rincon", "13/01/1994", "drincon@gmail.com", "dsapracticar");
         gj.registerUser("33333", "Mario", "Hernández", "06/12/1989", "mhernandez@gmail.com", "nosequeponer");
 
-        MyObject o1 = new MyObject("Espada", "Espada con poderes", 3.1);
-        gj.addObject(o1);
-        MyObject o2 = new MyObject("Anillo", "Anillo teletransportador", 2.7);
-        gj.addObject(o2);
-        MyObject o3 = new MyObject("Traje", "Traje invisible", 4.5);
-        gj.addObject(o3);
-        MyObject o4 = new MyObject("Gafas", "Gafas visión del futuro", 5.25);
-        gj.addObject(o4);
-        MyObject o5 = new MyObject("Pistola", "Pistola laser", 1.35);
-        gj.addObject(o5);
-        MyObject o6 = new MyObject("Capa", "Capa voladora", 5);
-        gj.addObject(o6);
+        gj.crearPartida("11", "Partida 1", 8);
+        gj.crearPartida("22", "Partida 2", 6);
+        gj.crearPartida("33", "Partida 3", 4);
+        gj.crearPartida("44", "Partida 4", 10);
+        gj.crearPartida("55", "Partida 5", 2);
 
-        gj.purchaseObject("Anillo", "11111");
-        gj.purchaseObject("Pistola", "11111");
+        gj.iniciarPartida("22", "11111");
+        gj.iniciarPartida("22", "22222");
+
     }
+
 
     @After
     public void tearDown() {
         this.gj = null;
     }
+
+    @Test
+    public void CrearPartida() {
+        Assert.assertEquals(5, this.gj.getNumPartidas());
+
+        gj.crearPartida("66", "Partida 6", 7);
+
+        Assert.assertEquals(6, this.gj.getNumPartidas());
+    }
+
 
     @Test
     public void registerUser() {
@@ -61,88 +65,71 @@ public class GestorJuegoImplTest {
 
 
     @Test
-    public void ordenarUserAlfabet() {
-        List<User> users = this.gj.ordenarUserAlfabet();
+    public void inicarPartida() {
+        Assert.assertEquals("22", this.gj.getUser("11111").getMyCurrentPartida().getId());
+        Assert.assertEquals("22", this.gj.getUser("22222").getMyCurrentPartida().getId());
 
-        Assert.assertEquals("David", users.get(0).getNombre());
-
-        Assert.assertEquals("Juan", users.get(1).getNombre());
-
-        Assert.assertEquals("Mario", users.get(2).getNombre());
+        Assert.assertEquals(0, this.gj.getUser("11111").getcurrentNivel());
+        Assert.assertEquals(0, this.gj.getUser("22222").getcurrentNivel());
     }
 
     @Test
-    public void logIn() {
-        Assert.assertFalse(gj.logIn("jlor@gmail.com", "megustsa"));
+    public void nivelActual() {
+        gj.pasarNivel("11111",70,"14:16:09");
+        gj.pasarNivel("11111",50,"17:16:09");
+        gj.pasarNivel("22222",80,"14:16:09");
 
-        Assert.assertTrue(gj.logIn("jlopezr@gmail.com", "megustadsa"));
-
-        Assert.assertFalse(gj.logIn("drincon@gmail.com", "dsapracticarr"));
-
-        Assert.assertTrue(gj.logIn("drincon@gmail.com", "dsapracticar"));
+        Assert.assertEquals(2, this.gj.nivelUser("11111"));
+        Assert.assertEquals(1, this.gj.nivelUser("22222"));
     }
 
     @Test
-    public void addObject() {
-        Assert.assertEquals(6, this.gj.getNumObject());
-        MyObject o7 = new MyObject("Pocima", "Pocima con veneno", 5);
-        gj.addObject(o7);
-        Assert.assertEquals(7, this.gj.getNumObject());
-    }
+    public void puntacionActual() {
+        gj.pasarNivel("11111",70,"14:16:09");
+        gj.pasarNivel("11111",50,"17:16:09");
+        gj.pasarNivel("22222",80,"14:16:09");
 
-    @Test
-    public void ordenarObjectsByPrice() {
-        List<MyObject> objects = this.gj.ordenarObjectByPrice();
-
-        Assert.assertEquals("Gafas", objects.get(0).getNombre());
-        Assert.assertEquals(5.25, objects.get(0).getCoins(), 0);
-
-        Assert.assertEquals("Capa", objects.get(1).getNombre());
-        Assert.assertEquals(5, objects.get(1).getCoins(), 0);
-
-        Assert.assertEquals("Traje", objects.get(2).getNombre());
-        Assert.assertEquals(4.5, objects.get(2).getCoins(), 0);
-
-        Assert.assertEquals("Espada", objects.get(3).getNombre());
-        Assert.assertEquals(3.1, objects.get(3).getCoins(), 0);
-
-        Assert.assertEquals("Anillo", objects.get(4).getNombre());
-        Assert.assertEquals(2.7, objects.get(4).getCoins(), 0);
-
-        Assert.assertEquals("Pistola", objects.get(5).getNombre());
-        Assert.assertEquals(1.35, objects.get(5).getCoins(), 0);
+        Assert.assertEquals(170, this.gj.puntosDeUser("11111"),1);
+        Assert.assertEquals(130, this.gj.puntosDeUser("22222"),1);
     }
 
 
     @Test
-    public void purchaseObject() {
-        Assert.assertEquals(2, this.gj.getnumObjectUser("11111"));
+    public void finalizarPartida() {
+        gj.finalizarPartida("11111");
 
-        gj.purchaseObject("Traje", "11111");
-        gj.purchaseObject("Capa", "11111");
+        Assert.assertEquals(null, this.gj.getUser("11111").getMyCurrentPartida());
 
-        Assert.assertEquals(36.45, gj.getUser("11111").getSaldo(), 0.5); //precisio delta quan comparem doubles
-        Assert.assertEquals(4, this.gj.getUser("11111").getNumberMisObjetos());
+        Assert.assertTrue(gj.finalizarPartida("11111"));
 
-        Assert.assertEquals(4, this.gj.getnumObjectUser("11111"));
     }
 
     @Test
-    public void listObjectByUser() {
-        gj.purchaseObject("Traje", "11111");
-        Assert.assertEquals(3, this.gj.getUser("11111").getNumberMisObjetos());
+    public void UserPartida() {
+        gj.getUsersOfPartida("22");
 
-        Assert.assertEquals(gj.getObject("Anillo"), gj.listObjectByUser("11111").get(0));
-        Assert.assertEquals(gj.getObject("Pistola"), gj.listObjectByUser("11111").get(1));
-        Assert.assertEquals(gj.getObject("Traje"), gj.listObjectByUser("11111").get(2));
+        List<User> users = this.gj.getUsersOfPartida("22");
+
+        Assert.assertEquals("11111", users.get(0).getId());
+        Assert.assertEquals("11111", users.get(1).getId());
+    }
+
+
+    @Test
+    public void getMyPartidas() {
+        gj.iniciarPartida("55", "11111");
+
+        List<Partida> mispartidas = gj.getMyPartidas("11111");
+
+        Assert.assertEquals("22",mispartidas.get(0).getId());
+        Assert.assertEquals("55",mispartidas.get(0).getId());
+
     }
 
     @Test
-    public void updateUser() {
-        gj.updateUser("22222", "David", "Rincon", "13/10/1995", "drincon@gmail.com", "jye-21-dneidsfw");
+    public void actividad() {
 
-        Assert.assertEquals(gj.getUser ("22222").getNacimiento(), "13/10/1995");
-        Assert.assertEquals(gj.getUser ("22222").getPassword(), "jye-21-dneidsfw");
+
     }
 
 }

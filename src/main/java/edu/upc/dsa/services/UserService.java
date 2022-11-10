@@ -3,10 +3,7 @@ package edu.upc.dsa.services;
 
 import edu.upc.dsa.GestorJuego;
 import edu.upc.dsa.GestorJuegoImpl;
-import edu.upc.dsa.models.MyObject;
-import edu.upc.dsa.models.User;
-import edu.upc.dsa.models.Credentials;
-import edu.upc.dsa.models.UserReg;
+import edu.upc.dsa.models.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -32,23 +29,16 @@ public class UserService {
             this.gj.registerUser("33333", "Mario", "Hernández", "06/12/1989", "mhernandez@gmail.com", "nosequeponer");
             this.gj.registerUser("44444", "Anna", "Iturralde", "13/01/2001", "annaiturralde@gmail.com", "minimo1");
         }
-        if (gj.getNumObject() == 0) {
-            MyObject o1 = new MyObject("Espada", "Espada con poderes", 3.1);
-            gj.addObject(o1);
-            MyObject o2 = new MyObject("Anillo", "Anillo teletransportador", 2.7);
-            gj.addObject(o2);
-            MyObject o3 = new MyObject("Traje", "Traje invisible", 4.5);
-            gj.addObject(o3);
-            MyObject o4 = new MyObject("Gafas", "Gafas visión del futuro", 5.25);
-            gj.addObject(o4);
-            MyObject o5 = new MyObject("Pistola", "Pistola laser", 1.35);
-            gj.addObject(o5);
-            MyObject o6 = new MyObject("Capa", "Capa voladora", 5);
-            gj.addObject(o6);
+        if (gj.getNumPartidas() == 0) {
+            gj.crearPartida("11", "Partida 1", 8);
+            gj.crearPartida("22", "Partida 2", 6);
+            gj.crearPartida("33", "Partida 3", 4);
+            gj.crearPartida("44", "Partida 4", 10);
+            gj.crearPartida("55", "Partida 5", 2);
         }
+        gj.iniciarPartida("22", "11111");
+        gj.iniciarPartida("22", "22222");
 
-        gj.purchaseObject("Anillo", "11111");
-        gj.purchaseObject("Pistola", "11111");
     }
 
     @GET
@@ -68,16 +58,16 @@ public class UserService {
     }
 
     @GET
-    @ApiOperation(value = "get all Objects", notes = "asdasd")
+    @ApiOperation(value = "get all Partidas", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = MyObject.class, responseContainer = "List"),
+            @ApiResponse(code = 201, message = "Successful", response = Partida.class, responseContainer = "List"),
     })
-    @Path("/MyObject")
+    @Path("/Partidas")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getObjects() {
+    public Response getPartidas() {
 
-        List<MyObject> objects = this.gj.getCatalogo();
-        GenericEntity<List<MyObject>> entity = new GenericEntity<List<MyObject>>(objects) {
+        List<Partida> partidas = this.gj.getPartidas();
+        GenericEntity<List<Partida>> entity = new GenericEntity<List<Partida>>(partidas) {
         };
         return Response.status(201).entity(entity).build();
 
@@ -98,18 +88,49 @@ public class UserService {
     }
 
     @GET
+    @ApiOperation(value = "get a User", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = User.class),
+            @ApiResponse(code = 404, message = "Track not found")
+    })
+    @Path("/{idUser}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response nivelActual(@PathParam("idUser") String idUser) {
+        int level = this.gj.nivelUser(idUser);
+        if (level == 0) return Response.status(404).build();
+        else return Response.status(201).entity(level).build();
+    }
+
+
+    @GET
+    @ApiOperation(value = "get a User", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = User.class),
+            @ApiResponse(code = 404, message = "Track not found")
+    })
+    @Path("/{idUser}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response puntuacionActual(@PathParam("idUser") String idUser) {
+        double level = this.gj.puntosDeUser(idUser);
+        if (level == 0) return Response.status(404).build();
+        else return Response.status(201).entity(level).build();
+    }
+
+
+    /**
+    @GET
     @ApiOperation(value = "get an Object", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = MyObject.class),
+            @ApiResponse(code = 201, message = "Successful", response = Partida.class),
             @ApiResponse(code = 404, message = "Track not found")
     })
     @Path("/MyObject/{nombre}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getObject(@PathParam("nombre") String nombre) {
-        MyObject o = this.gj.getObject(nombre);
+        Partida o = this.gj.getObject(nombre);
         if (o == null) return Response.status(404).build();
         else return Response.status(201).entity(o).build();
-    }
+    }*/
 
 
     @DELETE
@@ -144,68 +165,93 @@ public class UserService {
 
 
     @POST
-    @ApiOperation(value = "logIn User", notes = "asdasd")
+    @ApiOperation(value = "create a new Partida", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = User.class),
+            @ApiResponse(code = 201, message = "Successful", response = Partida.class),
             @ApiResponse(code = 500, message = "Validation Error")
     })
-    @Path("/logIn")
+    @Path("/{Partida}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response logIn(Credentials userLogIn) {
-        if (userLogIn.getCorreoLI() == null || userLogIn.getPasswordLI() == null)
-            return Response.status(500).entity(userLogIn).build();
-        if (this.gj.logIn(userLogIn.getCorreoLI(), userLogIn.getPasswordLI()))
-            return Response.status(201).entity(userLogIn).build();
-        else return Response.status(404).entity(userLogIn).build();
+    public Response crearNuevaPartida(@PathParam("Partida")Partida partida) {
+        this.gj.crearPartida(partida.getId(), partida.getDescripcion(), partida.getNivel());
+        return Response.status(201).entity(partida).build();
     }
 
 
-    @GET
-    @ApiOperation(value = "get a all User alphabetically arranged", notes = "asdasd")
+    @POST
+    @ApiOperation(value = "create a new Partida", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer = "List"),
-            @ApiResponse(code = 404, message = "Track not found")
+            @ApiResponse(code = 201, message = "Successful", response = Partida.class),
+            @ApiResponse(code = 500, message = "Validation Error")
     })
-    @Path("/sort/")
+    @Path("/inicioPArtida")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response iniciarNuevaPartida(Credentials credentials) {
+        this.gj.iniciarPartida(credentials.getidPartida(), credentials.getidUser());
+        return Response.status(201).entity(credentials).build();
+    }
+
+    @POST
+    @ApiOperation(value = "finalizarPartida", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Partida.class),
+            @ApiResponse(code = 500, message = "Validation Error")
+    })
+    @Path("/finalPartida/{idUser}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response finalizarPartida(@PathParam("idUser")String idUser) {
+        boolean end = this.gj.finalizarPartida(idUser);
+        if (end) return Response.status(201).entity(idUser).build();
+        else
+    }
+
+    @GET
+    @ApiOperation(value = "get all Partidas of a User", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Partida.class, responseContainer = "List"),
+    })
+    @Path("/User/{idUser}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response ordenarUserAlfabet() {
-        List<User> users = this.gj.ordenarUserAlfabet();
-        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {
+    public Response getPartidasUser(@PathParam("idUser")String idUser) {
+
+        List<Partida> partidas = this.gj.getMyPartidas(idUser);
+        GenericEntity<List<Partida>> entity = new GenericEntity<List<Partida>>(partidas) {
         };
         return Response.status(201).entity(entity).build();
     }
 
 
     @GET
-    @ApiOperation(value = "get a all Objects of a User", notes = "asdasd")
+    @ApiOperation(value = "get all users of a Partida", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = MyObject.class, responseContainer = "List"),
-            @ApiResponse(code = 404, message = "Track not found")
+            @ApiResponse(code = 201, message = "Successful", response = Partida.class, responseContainer = "List"),
     })
-    @Path("/{id}/MyObject/")
+    @Path("/Partida/{idUser}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listObjectByUser(@PathParam("id") String id) {
-        List<MyObject> myObjects = this.gj.listObjectByUser(id);
-        GenericEntity<List<MyObject>> entity = new GenericEntity<List<MyObject>>(myObjects) {
+    public Response getUsersOfPartida(@PathParam("idUser")String idUser) {
+
+        List<User> user = this.gj.getUsersOfPartida(idUser);
+        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(user) {
         };
         return Response.status(201).entity(entity).build();
     }
 
 
-    @GET
-    @ApiOperation(value = "purchase an Object", notes = "asdasd")
+
+
+    @PUT
+    @ApiOperation(value = "update a User", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "Track not found")
     })
-    @Path("/{id}/{nameObject}")
+    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response purchaseObject(@PathParam("nameObject") String nameObject, @PathParam("id") String id) {
-        boolean resultado = this.gj.purchaseObject(nameObject, id);
-        if (resultado) return Response.status(201).build();
-        else return Response.status(404).entity(resultado).build();
+    public Response pasarNivel(DatosPasarNivel datosPasarNivel) {
+        this.gj.pasarNivel(datosPasarNivel.getIdUser(), datosPasarNivel.getPuntos(), datosPasarNivel.getFecha());
+        if (datosPasarNivel.getFecha() == null || datosPasarNivel.getIdUser() == null) return Response.status(404).build();
+        else return Response.status(201).entity(datosPasarNivel).build();
     }
-
 
     @PUT
     @ApiOperation(value = "update a User", notes = "asdasd")
@@ -220,6 +266,8 @@ public class UserService {
         if (user.getIdReg() == null) return Response.status(404).build();
         else return Response.status(201).entity(user).build();
     }
+
+
 
 
 }

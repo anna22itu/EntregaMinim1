@@ -1,6 +1,7 @@
 package edu.upc.dsa.models;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 
@@ -10,12 +11,17 @@ public class User {
     private String correo;
     private String password;
     private String id;
-    private double saldo;
-    private LinkedList<MyObject> misObjetos;
+    private double puntos;
+    private Partida myCurrentPartida;
+
+    private List<Partida> misPartidas;
+    private int nivel;
+
 
     public User() {
 
     }
+
 
     public User(String id, String nombre, String apellidos, String nacimiento, String correo, String password) {
         this.nombre = nombre;
@@ -24,21 +30,19 @@ public class User {
         this.correo = correo;
         this.password = password;
         this.id = id;
-        this.saldo = 50;
-        this.misObjetos = new LinkedList<>();
+        this.puntos = 0;
+        this.myCurrentPartida = new Partida();
+        this.nivel = 0;
+        this.misPartidas= new ArrayList<>();
     }
 
-    public LinkedList<MyObject> getMisObjetos() {
-        return misObjetos;
+    public Partida getMyCurrentPartida() {
+        return myCurrentPartida;
     }
 
-    public int getNumberMisObjetos() {
-        return misObjetos.size();
-    }
 
-    public void setMisObjetos(MyObject miObjeto) {
-        this.misObjetos.add(miObjeto);
-        this.saldo = this.getSaldo() - miObjeto.getCoins();
+    public void setMyCurrentPartida(Partida partida) {
+        this.myCurrentPartida = partida;
     }
 
     public String getNombre() {
@@ -89,13 +93,27 @@ public class User {
         this.id = id;
     }
 
-    public double getSaldo() {
-        return saldo;
+    public double getPuntos() {
+        return puntos;
     }
 
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
+    public void setPuntos(double puntos) {
+        this.puntos = puntos;
     }
 
+    public int getcurrentNivel() {
+        return nivel;
+    }
 
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+
+    public List<Partida> getMisPartidas() {
+        return misPartidas;
+    }
+
+    public void setMisPartidas() {
+        this.misPartidas.add(this.getMyCurrentPartida());
+    }
 }
