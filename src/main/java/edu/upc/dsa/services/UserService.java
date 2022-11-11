@@ -127,8 +127,8 @@ public class UserService {
     })
     @Path("/inicioPartida")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response iniciarNuevaPartida(Credentials credentials) {
-        this.gj.iniciarPartida(credentials.getidPartida(), credentials.getidUser());
+    public Response iniciarNuevaPartida(Actividad actividad) {
+        this.gj.iniciarPartida(actividad.getidPartida(), actividad.getidUser());
         return Response.status(201).build();
     }
 
@@ -222,8 +222,6 @@ public class UserService {
     }
 
 
-
-
     @PUT
     @ApiOperation(value = "pasar de Nivel", notes = "asdasd")
     @ApiResponses(value = {
@@ -260,9 +258,9 @@ public class UserService {
     })
     @Path("/actividad/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response actividad(Actividad actividad) {
+    public Response actividad(Credentials credentials) {
 
-        List<User> user = this.gj.getUsersOfPartida(idUser);
+        List<User> user = this.gj.ac getUsersOfPartida(idUser);
         GenericEntity<List<User>> entity = new GenericEntity<List<User>>(user) {
         };
         return Response.status(201).entity(entity).build();

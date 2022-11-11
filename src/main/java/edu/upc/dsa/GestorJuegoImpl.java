@@ -1,5 +1,7 @@
 package edu.upc.dsa;
 
+import edu.upc.dsa.models.Actividad;
+import edu.upc.dsa.models.DatosActividad;
 import edu.upc.dsa.models.Partida;
 import edu.upc.dsa.models.User;
 import org.apache.log4j.Logger;
@@ -108,10 +110,15 @@ public class GestorJuegoImpl implements GestorJuego {
         return this.users.get(idUser).getMisPartidas();
     }
 
-    /**
-    public List<String> actividad(String idUser, String idPartida){
+/**
+    public List<DatosActividad> actividad(String idUser, String idPartida){
+        List<DatosActividad> misActividades = new ArrayList<>();
+
         Actividad actividad = new Actividad(idUser,idPartida);
-        return
+        DatosActividad datos = new DatosActividad()
+        misActividades.add(actividad);
+
+        return null ;
     }*/
 
 
