@@ -55,38 +55,6 @@ public class GestorJuegoImpl implements GestorJuego {
         logger.info("new User added");
     }
 
-    /**
-    public List<User> ordenarUserAlfabet() {
-
-        List<User> userList = new ArrayList<>(this.users.values());
-        userList.sort(new Comparator<User>() {
-            @Override
-            public int compare(User u1, User u2) {
-                return u1.getNombre().compareTo(u2.getNombre());
-            }
-        });
-        return userList;
-    }
-
-    public boolean logIn(String correo, String password) {
-
-        boolean resultado = false;
-        for (User u : this.users.values()) {
-            String correoInput = u.getCorreo();
-            String passwordInput = u.getPassword();
-            if ((correoInput.equals(correo) && passwordInput.equals(password))) {
-                resultado = true;
-                break;
-            }
-        }
-        return resultado;
-    }
-
-    public void addObject(Partida o) {
-        partidas.add(o);
-    }
-*/
-
 
     public int nivelUser(String idUser){
         User u = this.users.get(idUser);
@@ -101,7 +69,7 @@ public class GestorJuegoImpl implements GestorJuego {
     public void pasarNivel(String idUser, double puntos, String fecha){
         User u = this.users.get(idUser);
 
-        if(u.getcurrentNivel()  == u.getMyCurrentPartida().getNivel()){ // primero comprobamos que no esté en el último nivel
+        if(u.getcurrentNivel()  == u.getMyCurrentPartida().getNiveles()){ // primero comprobamos que no esté en el último nivel
             u.setPuntos(u.getPuntos() + 100);
             this.finalizarPartida(u.getId());
         }
@@ -136,41 +104,20 @@ public class GestorJuegoImpl implements GestorJuego {
         return jugadores;
     }
 
-
     public List<Partida> getMyPartidas(String idUser){
         return this.users.get(idUser).getMisPartidas();
     }
 
-/**
-
-    public List<Partida> ordenarObjectByPrice() {
-        this.partidas.sort(new Comparator<Partida>() {
-            @Override
-            public int compare(Partida o2, Partida o1) {
-                return Double.compare(o1.getNivel(), o2.getNivel());
-            }
-        });
-        return partidas;
+    /**
+    public List<String> actividad(String idUser, String idPartida){
+        Actividad actividad = new Actividad(idUser,idPartida);
+        return
     }*/
 
-    /**
-    public boolean purchaseObject(String nameObject, String key) {
-        User user = this.users.get(key);
-        boolean bol = false;
-        if (user != null) {
-            user.setMyCurrentPartida(this.getObject(nameObject));
-            bol = true;
-        }
-        return bol;
-    }
-*/
 
-    /**
-    public List<Partida> listObjectByUser(String id) {
-        User u = users.get(id);
-        return u.getMyCurrentPartida();
-    }
-*/
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
     public void updateUser(String id, String nombre, String apellidos, String nacimiento, String correo, String password){
         User u = users.get(id);
         u.setNombre(nombre);
@@ -179,7 +126,6 @@ public class GestorJuegoImpl implements GestorJuego {
         u.setCorreo(correo);
         u.setPassword(password);
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////
 
     public int getNumUser() {
         int numUser = this.users.size();
@@ -214,24 +160,6 @@ public class GestorJuegoImpl implements GestorJuego {
         return null;
     }
 
-    /**
-    @Override
-    public Partida getObject(String nombre) {
-        for (Partida o : partidas) {
-            if (o.getId().equals(nombre)) {
-                return o;
-            }
-            logger.info("getObject(" + nombre + "): " + o);
-        }
-        return null;
-    }
-
-    @Override
-    public int getnumObjectUser(String id) {
-        int num = this.users.get(id).getNumberMisObjetos();
-        return num;
-    }*/
-
     @Override
     public boolean deleteUser(String id) {
         User user = this.getUser(id);
@@ -244,14 +172,5 @@ public class GestorJuegoImpl implements GestorJuego {
         return bol;
     }
 
-    /**
-     @Override public void postUser(String id) {
-     User user = this.getUser(id);
-     if (user==null) {
-     logger.warn("not found " + user);
-     }
-     else logger.info(user+" deleted ");
-     this.users.remove(users);
-     }*/
 
 }

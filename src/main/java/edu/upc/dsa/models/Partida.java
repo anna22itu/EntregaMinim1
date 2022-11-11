@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class Partida {
     private String id;
     private String descripcion;
-    private int nivel;
+    private int niveles;
 
     private HashMap<String,User> participantes;
 
@@ -13,10 +13,11 @@ public class Partida {
 
     }
 
-    public Partida(String nombre, String descripcion, int nivel) {
+    public Partida(String nombre, String descripcion, int niveles) {
         this.id = nombre;
         this.descripcion = descripcion;
-        this.nivel = nivel;
+        this.niveles = niveles;
+        this.participantes = new HashMap<>();
     }
 
     public String getId() {
@@ -35,12 +36,12 @@ public class Partida {
         this.descripcion = descripcion;
     }
 
-    public int getNivel() {
-        return nivel;
+    public int getNiveles() {
+        return niveles;
     }
 
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
+    public void setNiveles(int niveles) {
+        this.niveles = niveles;
     }
 
     public HashMap<String, User> getParticipantes() {

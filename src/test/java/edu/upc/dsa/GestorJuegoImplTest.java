@@ -99,9 +99,6 @@ public class GestorJuegoImplTest {
         gj.finalizarPartida("11111");
 
         Assert.assertEquals(null, this.gj.getUser("11111").getMyCurrentPartida());
-
-        Assert.assertTrue(gj.finalizarPartida("11111"));
-
     }
 
     @Test
@@ -111,7 +108,7 @@ public class GestorJuegoImplTest {
         List<User> users = this.gj.getUsersOfPartida("22");
 
         Assert.assertEquals("11111", users.get(0).getId());
-        Assert.assertEquals("11111", users.get(1).getId());
+        Assert.assertEquals("22222", users.get(1).getId());
     }
 
 
@@ -122,7 +119,7 @@ public class GestorJuegoImplTest {
         List<Partida> mispartidas = gj.getMyPartidas("11111");
 
         Assert.assertEquals("22",mispartidas.get(0).getId());
-        Assert.assertEquals("55",mispartidas.get(0).getId());
+        Assert.assertEquals("55",mispartidas.get(1).getId());
 
     }
 

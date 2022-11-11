@@ -3,14 +3,14 @@ package edu.upc.dsa.models;
 public class Actividad {
 
     private String userId;
-    private String juego;
+    private String idPartida;
 
     public Actividad() {
     }
 
-    public Actividad(String userId, String descripcion) {
+    public Actividad(String userId, String idPartida) {
         this.userId = userId;
-        this.juego = descripcion;
+        this.idPartida = idPartida;
     }
 
     public String getUserId() {
@@ -21,11 +21,11 @@ public class Actividad {
         this.userId = userId;
     }
 
-    public String getJuego() {
-        return juego;
+    public String getIdPartida() {
+        return idPartida;
     }
 
-    public void setJuego(String juego) {
-        this.juego = juego;
+    public void setIdPartida(String idPartida) {
+        this.idPartida = idPartida;
     }
 }

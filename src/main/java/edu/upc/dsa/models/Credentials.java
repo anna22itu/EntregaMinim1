@@ -30,8 +30,4 @@ public class Credentials {
         this.idUser = idUser;
     }
 
-    /**
-    public Boolean isEqual(UserLogIn userLogIn) {
-        return (this.correoLI.equals(userLogIn.getCorreoLI()) && this.passwordLI.equals(userLogIn.getPasswordLI()));
-    }*/
 }

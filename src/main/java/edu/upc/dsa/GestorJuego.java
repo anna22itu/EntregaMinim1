@@ -16,16 +16,6 @@ public interface GestorJuego {
 
     public void registerUser(String id, String nombre, String apellidos, String nacimiento, String correo, String password);
 
-    //public List<User> ordenarUserAlfabet();
-
-    //public boolean logIn(String correo, String password);
-
-    //public void addObject(Partida o);
-
-    //public List<Partida> ordenarObjectByPrice();
-
-    //public boolean purchaseObject(String nameObject, String id);
-
     public int nivelUser(String idUser);
 
     public double puntosDeUser(String idUser);
@@ -36,8 +26,9 @@ public interface GestorJuego {
 
     public List<Partida> getMyPartidas(String idUser);
 
-
     public List<User> getUsersOfPartida(String idPartida);
+
+    //public List<String> actividad(String idUser, String idPartida);
 
 
 
@@ -45,7 +36,6 @@ public interface GestorJuego {
 
 
     public void updateUser(String id, String nombre, String apellidos, String nacimiento, String correo, String password);
-
 
     public int getNumUser();
 
@@ -57,10 +47,7 @@ public interface GestorJuego {
 
     public User getUser(String id);
 
-    //public Partida getPartida(String id);
-
     public boolean deleteUser(String id);
 
-    //public int getnumObjectUser(String id);
 
 }
