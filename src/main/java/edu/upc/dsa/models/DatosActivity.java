@@ -1,16 +1,16 @@
 package edu.upc.dsa.models;
 
-public class DatosActividad {
+public class DatosActivity {
 
     private int levelAct;
     private double puntosAct;
     private String fechaAct;
 
-    public DatosActividad() {
+    public DatosActivity() {
 
     }
 
-    public DatosActividad(int levelAct, double puntosAct, String fechaAct) {
+    public DatosActivity(int levelAct, double puntosAct, String fechaAct) {
         this.levelAct = levelAct;
         this.puntosAct = puntosAct;
         this.fechaAct = fechaAct;

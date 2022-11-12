@@ -1,5 +1,6 @@
 package edu.upc.dsa;
 
+import edu.upc.dsa.models.DatosActivity;
 import edu.upc.dsa.models.Partida;
 import edu.upc.dsa.models.User;
 
@@ -28,7 +29,7 @@ public interface GestorJuego {
 
     public List<User> getUsersOfPartida(String idPartida);
 
-    //public List<DatosActividad> actividad(String idUser, String idPartida);
+    //public List<DatosActivity> actividad(String idUser, String idPartida);
 
 
 

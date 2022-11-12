@@ -36,9 +36,6 @@ public class UserService {
             gj.crearPartida("44", "Partida 4", 10);
             gj.crearPartida("55", "Partida 5", 2);
         }
-        gj.iniciarPartida("22", "11111");
-        gj.iniciarPartida("22", "22222");
-
     }
 
     @GET
@@ -123,14 +120,19 @@ public class UserService {
     @ApiOperation(value = "iniciar a new Partida", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
-            @ApiResponse(code = 404, message = "Validation Error")
+            @ApiResponse(code = 404, message = "Not found"),
+            @ApiResponse(code=500,message ="Error")
     })
     @Path("/inicioPartida")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response iniciarNuevaPartida(Actividad actividad) {
+        User u = gj.getUser(actividad.getUserIdAct());
         if (actividad.getUserIdAct() == null || actividad.getPartidaIdAct() == null) return Response.status(404).build();
-        else this.gj.iniciarPartida(actividad.getPartidaIdAct(), actividad.getUserIdAct());
-        return Response.status(201).build();
+        if  (u.getMyCurrentPartida() == null || u.getMyCurrentPartida().getId() == null){
+            this.gj.iniciarPartida(actividad.getPartidaIdAct(), actividad.getUserIdAct());
+            return Response.status(201).build();
+        }
+        else return Response.status(500).build();
     }
 
     @POST
@@ -150,14 +152,14 @@ public class UserService {
     @GET
     @ApiOperation(value = "get the current level of a User", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Integer.class, responseContainer = "Integer"),
+            @ApiResponse(code = 201, message = "Successful", response = Integer.class),
             @ApiResponse(code = 404, message = "Track not found")
     })
     @Path("/nivelUser/{idUser}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response nivelActual(@PathParam("idUser") String idUser) {
         Integer level = this.gj.nivelUser(idUser);
-        if (idUser == null) return Response.status(404).entity(level).build();
+        //if (idUser == null) return Response.status(404).entity(level).build();
         return Response.status(201).entity(level).build();
     }
 
@@ -165,15 +167,16 @@ public class UserService {
     @GET
     @ApiOperation(value = "get the score of a User", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = User.class),
+            @ApiResponse(code = 201, message = "Successful", response = Double.class),
             @ApiResponse(code = 404, message = "Track not found")
     })
     @Path("/puntuacion/{idUser}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response puntuacionActual(@PathParam("idUser") String idUser) {
-        double level = this.gj.puntosDeUser(idUser);
-        if (level == 0) return Response.status(404).build();
-        else return Response.status(201).entity(level).build();
+        double puntos = this.gj.puntosDeUser(idUser);
+
+        //if (puntos == 0) return Response.status(404).build();
+        return Response.status(201).entity(puntos).build();
     }
 
 

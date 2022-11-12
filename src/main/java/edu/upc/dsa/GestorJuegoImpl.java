@@ -1,7 +1,6 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.models.Partida;
-import edu.upc.dsa.models.User;
+import edu.upc.dsa.models.*;
 import org.apache.log4j.Logger;
 
 import java.util.*;
@@ -71,7 +70,7 @@ public class GestorJuegoImpl implements GestorJuego {
 
     public double puntosDeUser(String idUser){
         User u = this.users.get(idUser);
-        logger.info("los puntos del User " + u.getId() + " son " + u.getcurrentNivel());
+        logger.info("los puntos del User " + u.getId() + " en la partida " + u.getMyCurrentPartida().getId() + " son " + u.getcurrentNivel());
         return u.getPuntos();
     }
 
@@ -119,14 +118,16 @@ public class GestorJuegoImpl implements GestorJuego {
     }
 
 /**
-    public List<DatosActividad> actividad(String idUser, String idPartida){
-        List<DatosActividad> misActividades = new ArrayList<>();
+    public List<DatosActivity> actividad(String idUser, String idPartida){
+        List<DatosActivity> misActividades = new ArrayList<>();
 
-        Actividad actividad = new Actividad(idUser,idPartida);
-        DatosActividad datos = new DatosActividad()
-        misActividades.add(actividad);
+        User u = this.users.get(idUser);
 
-        return null ;
+        DatosPasarNivel datosPasarNivel = new DatosPasarNivel(idUser,);
+        DatosActivity datos = new DatosActivity(u.getcurrentNivel(), u.getPuntos(),);
+        misActividades.add(datos);
+
+        return misActividades;
     }*/
 
 
