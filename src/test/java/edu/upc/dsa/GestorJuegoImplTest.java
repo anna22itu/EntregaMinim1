@@ -97,14 +97,11 @@ public class GestorJuegoImplTest {
     @Test
     public void finalizarPartida() {
         gj.finalizarPartida("11111");
-
-        Assert.assertEquals(null, this.gj.getUser("11111").getMyCurrentPartida());
+        Assert.assertNull(this.gj.getUser("11111").getMyCurrentPartida());
     }
 
     @Test
     public void UserPartida() {
-        gj.getUsersOfPartida("22");
-
         List<User> users = this.gj.getUsersOfPartida("22");
 
         Assert.assertEquals("11111", users.get(0).getId());
@@ -114,13 +111,13 @@ public class GestorJuegoImplTest {
 
     @Test
     public void getMyPartidas() {
+        gj.finalizarPartida("11111");
         gj.iniciarPartida("55", "11111");
 
         List<Partida> mispartidas = gj.getMyPartidas("11111");
 
         Assert.assertEquals("22",mispartidas.get(0).getId());
         Assert.assertEquals("55",mispartidas.get(1).getId());
-
     }
 
     @Test

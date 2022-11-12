@@ -2,32 +2,31 @@ package edu.upc.dsa.models;
 
 public class Actividad {
 
-    private String idPartida;
-    private String idUser;
+
+    private String partidaId;
+    private String UserId;
 
     public Actividad() {
     }
 
-
-    public Actividad(String idPartida, String idUser) {
-        this.idPartida = idPartida;
-        this.idUser = idUser;
+    public Actividad(String partidaId, String userId) {
+        this.partidaId = partidaId;
+        this.UserId = userId;
     }
 
-    public String getidPartida() {
-        return idPartida;
+    public String getPartidaIdAct() {
+        return partidaId;
     }
 
-    public void setidPartida(String idPartida) {
-        this.idPartida = idPartida;
+    public void setPartidaIdAct(String partidaId) {
+        this.partidaId = partidaId;
     }
 
-    public String getidUser() {
-        return idUser;
+    public String getUserIdAct() {
+        return UserId;
     }
 
-    public void setidUser(String idUser) {
-        this.idUser = idUser;
+    public void setUserIdAct(String userId) {
+        UserId = userId;
     }
-
 }

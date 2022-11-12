@@ -1,15 +1,10 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.models.Actividad;
-import edu.upc.dsa.models.DatosActividad;
 import edu.upc.dsa.models.Partida;
 import edu.upc.dsa.models.User;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class GestorJuegoImpl implements GestorJuego {
     private static GestorJuego instance;
@@ -30,6 +25,7 @@ public class GestorJuegoImpl implements GestorJuego {
     public void crearPartida (String id, String descripcion, int niveles){
         Partida p = new Partida(id,descripcion,niveles);
         this.partidas.add(p);
+        logger.info("se ha creado una partida nueva");
     }
 
 
@@ -37,18 +33,27 @@ public class GestorJuegoImpl implements GestorJuego {
 
         User u = this.users.get(idUser);
 
-        u.setPuntos(50);
+        if (u.getMyCurrentPartida() == null || u.getMyCurrentPartida().getId() == null){
+            u.setPuntos(50);
 
-        Partida partida = null;
-        for (Partida p : partidas) {
-            if (p.getId().equals(idPartida))
-            {
-                partida = p;
+            Partida partida = null;
+
+            for (Partida p : partidas) {
+                if (p.getId().equals(idPartida))
+                {
+                    partida = p;
+                    break;
+                }
             }
+            u.setMyCurrentPartida(partida);
+            u.setMisPartidas();
+            assert partida != null;
+            partida.addParticipantes(u);
+            logger.info("La partida ha empezado");
         }
-        u.setMyCurrentPartida(partida);
-        u.setMisPartidas();
-        partida.addParticipantes(u);
+        else{
+            logger.warn("Estás jugando en una partida. Para empezar otra partida primero finaliza la actual");
+        }
     }
 
     public void registerUser(String id, String nombre, String apellidos, String nacimiento, String correo, String password) {
@@ -60,11 +65,13 @@ public class GestorJuegoImpl implements GestorJuego {
 
     public int nivelUser(String idUser){
         User u = this.users.get(idUser);
+        logger.info("el nivel del User " + u.getId() + " es " + u.getcurrentNivel());
         return u.getcurrentNivel();
     }
 
     public double puntosDeUser(String idUser){
         User u = this.users.get(idUser);
+        logger.info("los puntos del User " + u.getId() + " son " + u.getcurrentNivel());
         return u.getPuntos();
     }
 
@@ -77,13 +84,15 @@ public class GestorJuegoImpl implements GestorJuego {
         }
         u.setNivel(u.getcurrentNivel() + 1); // si no lo está lo cambiamos de nivel
         u.setPuntos(u.getPuntos() + puntos);
+        logger.info("El User " + u.getId() + " ha pasado al nivel " + u.getcurrentNivel());
     }
 
 
     public boolean finalizarPartida(String idUser){
         User u = this.users.get(idUser);
         u.getMyCurrentPartida().removeParticipantes(u); // cuando acaba la partida lo eliminamos de la lista de los jugadores de esa partida
-        u.setMyCurrentPartida(null); // la partida la pondremos a null pq ya ha finalizado la partida
+        u.setMyCurrentPartida(null);
+        logger.info("Se ha finalizado la partida correctamente");
         return  true;
     }
 
@@ -95,7 +104,6 @@ public class GestorJuegoImpl implements GestorJuego {
                 partida = p;
             }
         }
-
         List<User> jugadores = new ArrayList<>(partida.getParticipantes().values());
         jugadores.sort(new Comparator<User>() {
             @Override
@@ -132,6 +140,7 @@ public class GestorJuegoImpl implements GestorJuego {
         u.setNacimiento(nacimiento);
         u.setCorreo(correo);
         u.setPassword(password);
+        logger.info("Se han actualizado los datos del User correctamente");
     }
 
     public int getNumUser() {

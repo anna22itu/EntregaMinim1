@@ -122,13 +122,14 @@ public class UserService {
     @POST
     @ApiOperation(value = "iniciar a new Partida", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Partida.class),
-            @ApiResponse(code = 500, message = "Validation Error")
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "Validation Error")
     })
     @Path("/inicioPartida")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response iniciarNuevaPartida(Actividad actividad) {
-        this.gj.iniciarPartida(actividad.getidPartida(), actividad.getidUser());
+        if (actividad.getUserIdAct() == null || actividad.getPartidaIdAct() == null) return Response.status(404).build();
+        else this.gj.iniciarPartida(actividad.getPartidaIdAct(), actividad.getUserIdAct());
         return Response.status(201).build();
     }
 
@@ -211,11 +212,11 @@ public class UserService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Partida.class, responseContainer = "List"),
     })
-    @Path("/Partida/{idUser}")
+    @Path("/Partida/{idPartida}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsersOfPartida(@PathParam("idUser")String idUser) {
+    public Response getUsersOfPartida(@PathParam("idPartida")String idPartida) {
 
-        List<User> user = this.gj.getUsersOfPartida(idUser);
+        List<User> user = this.gj.getUsersOfPartida(idPartida);
         GenericEntity<List<User>> entity = new GenericEntity<List<User>>(user) {
         };
         return Response.status(201).entity(entity).build();

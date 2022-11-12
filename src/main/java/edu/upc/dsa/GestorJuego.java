@@ -1,7 +1,5 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.models.Actividad;
-import edu.upc.dsa.models.DatosActividad;
 import edu.upc.dsa.models.Partida;
 import edu.upc.dsa.models.User;
 
