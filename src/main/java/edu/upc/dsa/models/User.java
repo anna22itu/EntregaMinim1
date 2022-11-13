@@ -1,5 +1,6 @@
 package edu.upc.dsa.models;
 
+import edu.upc.dsa.models.Data.DatosActivity;
 import edu.upc.dsa.models.EO.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ public class User {
     private int myCurrentNivel;
     private List<Level> misNiveles;
 
+    private List<DatosActivity> datosMisActividades;
+
     public User() {
 
     }
@@ -36,6 +39,7 @@ public class User {
         this.myCurrentNivel = 0;
         this.misPartidas= new ArrayList<>();
         this.misNiveles= new ArrayList<>();
+        this.datosMisActividades= new ArrayList<>();
     }
 
     public Partida getMyCurrentPartida() {
@@ -119,13 +123,6 @@ public class User {
         this.misPartidas.add(this.getMyCurrentPartida());
     }
 
-    public void setMisPartidas(List<Partida> misPartidas) {
-        this.misPartidas = misPartidas;
-    }
-
-    public int getMyCurrentNivel() {
-        return myCurrentNivel;
-    }
 
     public List<Level> getMisNiveles() {
         return misNiveles;
@@ -135,4 +132,17 @@ public class User {
         Level level = new Level(l);
         misNiveles.add(level);
     }
+
+    public void setMisNiveles(List<Level> misNiveles) {
+        this.misNiveles = misNiveles;
+    }
+
+    public List<DatosActivity> getDatosMisActividades() {
+        return datosMisActividades;
+    }
+
+    public void setDatosMisActividades(DatosActivity miActividad) {
+        datosMisActividades.add(miActividad);
+    }
+
 }

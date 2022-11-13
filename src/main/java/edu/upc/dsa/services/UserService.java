@@ -260,11 +260,12 @@ public class UserService {
     }
 
 
-/**
-    @GET
-    @ApiOperation(value = "get all users of a Partida", notes = "asdasd")
+
+    @POST
+    @ApiOperation(value = "get the activity of a User", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = DatosActivity.class, responseContainer = "List"),
+            @ApiResponse(code = 404, message = "Track not found")
     })
     @Path("/actividad/")
     @Produces(MediaType.APPLICATION_JSON)
@@ -274,5 +275,5 @@ public class UserService {
         GenericEntity<List<DatosActivity>> entity = new GenericEntity<List<DatosActivity>>(datosActivities) {
         };
         return Response.status(201).entity(entity).build();
-    }*/
+    }
 }

@@ -30,7 +30,7 @@ public interface GestorJuego {
 
     public List<User> getUsersOfPartida(String idPartida);
 
-    //public List<DatosActivity> actividad(String idUser, String idPartida);
+    public List<DatosActivity> actividad(String idUser, String idPartida);
 
 
 

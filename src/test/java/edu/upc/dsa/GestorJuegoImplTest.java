@@ -1,6 +1,7 @@
 package edu.upc.dsa;
 
 import edu.upc.dsa.models.User;
+import edu.upc.dsa.models.Data.*;
 import edu.upc.dsa.models.Partida;
 import org.junit.After;
 import org.junit.Assert;
@@ -131,7 +132,7 @@ public class GestorJuegoImplTest {
         Assert.assertEquals("55",mispartidas.get(1).getId());
     }
 
-    /**
+
     @Test
     public void actividad() {
         gj.iniciarPartida("33","33333");
@@ -149,5 +150,5 @@ public class GestorJuegoImplTest {
         Assert.assertEquals(70,myActivity.get(0).getPuntosAct(),0);
         Assert.assertEquals(50,myActivity.get(1).getPuntosAct(),0);
         Assert.assertEquals(80,myActivity.get(2).getPuntosAct(),0);
-    }*/
+    }
 }

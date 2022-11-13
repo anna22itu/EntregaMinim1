@@ -88,6 +88,8 @@ public class GestorJuegoImpl implements GestorJuego {
         u.setPuntos(u.getPuntos() + puntos);
         int l = u.getcurrentNivel();
         u.addMisNiveles(l);
+        DatosActivity miActividad = new DatosActivity(u.getcurrentNivel(),puntos,fecha);
+        u.setDatosMisActividades(miActividad);
         logger.info("El User " + u.getId() + " ha pasado al nivel " + u.getcurrentNivel());
     }
 
@@ -115,26 +117,28 @@ public class GestorJuegoImpl implements GestorJuego {
                 return Double.compare(u1.getPuntos(),u2.getPuntos());
             }
         });
+        logger.info("Se han ordenado los usuarios de la partida correctamente");
         return jugadores;
     }
 
     public List<Partida> getMyPartidas(String idUser){
+        logger.info("Mis partidas se han cargado correctamente");
         return this.users.get(idUser).getMisPartidas();
     }
 
-/**
+
     public List<DatosActivity> actividad(String idUser, String idPartida){
-        List<DatosActivity> misActividades = new ArrayList<>();
-
-        User u = this.users.get(idUser);
-        List<Level> myLevels = u.getMisNiveles();
-
-        for (Level level: myLevels) {
-            DatosActivity datos = new DatosActivity(level,puntos,fecha);
-            misActividades.add(datos);
+        List<DatosActivity> resolution = null;
+        for (Partida p : partidas) {
+            if (p.getId().equals(idPartida)){
+                User u = this.users.get(idUser);
+                resolution = u.getDatosMisActividades();
+                break;
+            }
         }
-        return misActividades;
-    }*/
+        logger.info("Las actividades del User " + idUser + " se han cargado correctamente");
+        return resolution;
+    }
 
 
 
