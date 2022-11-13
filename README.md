@@ -1,24 +1,29 @@
 # EntregaMinim1 Examen
 
 **Parte I:**
-Se ha creado una interfície GestorJuego.java donde se definen los métodos principales y algunas funciones extras necesarias para el funcionamiento.
+Se ha creado una interfaz GestorJuego.java donde se definen los métodos principales y algunas funciones extras necesarias para el funcionamiento.
 
 En GestorJuegoImpl.java se implementan todas estas funciones.
 
-Se han creado dos clases modelos principales User y Partida con las que trabajar
+Se han creado dos clases modelos principales, User y Partida con las que trabajar. También se han creado tres package en la carpeta modelos que se usarán en l parte 2 como objetos de transferencia.
 
-Se han implementado todas las funciones menos la de la actividad, que falta aclarar algunos conceptos.
+Funcionan todos los métodos y los tests correspondientes, menos el método de la actividad que falta corregir algunas cosas (aunque está todo planteado)
 
+Se ha asumido que una partida y un juego son lo mismo (más adelante se intentará modificar esta confusión de concepto)
 
 
 **Parte II:**
 Se ha implementado un servicio REST, UserService.java en el que se implementan todos los métodos CRUD necesarios.
 
-También se han definido objetos de transferencia para evitar ciclos. 
+También se han definido objetos de transferencia para evitar ciclos. Tenemos tres package (Reg & Data & EO):
 
-En este caso se han declarado; 'UserReg' que nos ayudará a generar nuevos usuarios; 'PartidaReg' para generar nuevas partidas; 'Actividad' que define un idUser y un idJuego, que se usará tanto para el método actividad como para iniciar partida.
+- Reg: 'UserReg' que nos ayudará a generar nuevos usuarios; 'PartidaReg' para generar nuevas partidas.
 
-Por otro lado, se ha definido 'DatosPasarNivel' para utilizar en el método PasarNivel.
+- Data: 'Actividad' que define un idUser y un idJuego que se usará para el método actividad; 'DatosActivity' que ayudará a poder mostrar los datos de la actividad correctamente; 'DatosPasarNivel' para poder coger los datos de pasar nivel.
+
+- EO: (Extra objects): 'Level' para poder mostrar en swagger el nivel actual del jugador; 'Point' para poder mostrar en swagger los puntos actuales del jugador;
+
+
 
 
 
