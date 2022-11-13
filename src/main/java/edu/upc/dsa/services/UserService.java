@@ -4,6 +4,12 @@ package edu.upc.dsa.services;
 import edu.upc.dsa.GestorJuego;
 import edu.upc.dsa.GestorJuegoImpl;
 import edu.upc.dsa.models.*;
+import edu.upc.dsa.models.Data.DatosActivity;
+import edu.upc.dsa.models.EO.*;
+import edu.upc.dsa.models.Reg.*;
+import edu.upc.dsa.models.Reg.PartidaReg;
+import edu.upc.dsa.models.Data.Actividad;
+import edu.upc.dsa.models.Data.DatosPasarNivel;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -152,15 +158,15 @@ public class UserService {
     @GET
     @ApiOperation(value = "get the current level of a User", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Integer.class),
+            @ApiResponse(code = 201, message = "Successful", response = Level.class, responseContainer = "List" ),
             @ApiResponse(code = 404, message = "Track not found")
     })
     @Path("/nivelUser/{idUser}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response nivelActual(@PathParam("idUser") String idUser) {
-        Integer level = this.gj.nivelUser(idUser);
-        //if (idUser == null) return Response.status(404).entity(level).build();
-        return Response.status(201).entity(level).build();
+        Level level = new Level(this.gj.nivelUser(idUser));
+        GenericEntity <Level> entity = new GenericEntity<Level>(level) {  };
+        return Response.status(201).entity(entity).build();
     }
 
 
@@ -173,10 +179,9 @@ public class UserService {
     @Path("/puntuacion/{idUser}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response puntuacionActual(@PathParam("idUser") String idUser) {
-        double puntos = this.gj.puntosDeUser(idUser);
-
-        //if (puntos == 0) return Response.status(404).build();
-        return Response.status(201).entity(puntos).build();
+        Point points = new Point(this.gj.puntosDeUser(idUser));
+        GenericEntity <Point> entity = new GenericEntity<Point>(points) {  };
+        return Response.status(201).entity(points).build();
     }
 
 
@@ -254,18 +259,19 @@ public class UserService {
         else return Response.status(201).entity(user).build();
     }
 
+
 /**
     @GET
     @ApiOperation(value = "get all users of a Partida", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Partida.class, responseContainer = "List"),
+            @ApiResponse(code = 201, message = "Successful", response = DatosActivity.class, responseContainer = "List"),
     })
     @Path("/actividad/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response actividad(Credentials credentials) {
+    public Response actividad(Actividad actividad) {
 
-        List<User> user = this.gj.ac getUsersOfPartida(idUser);
-        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(user) {
+        List<DatosActivity> datosActivities = this.gj.actividad(actividad.getUserIdAct(),actividad.getPartidaIdAct());
+        GenericEntity<List<DatosActivity>> entity = new GenericEntity<List<DatosActivity>>(datosActivities) {
         };
         return Response.status(201).entity(entity).build();
     }*/

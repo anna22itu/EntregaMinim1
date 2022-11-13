@@ -1,5 +1,6 @@
 package edu.upc.dsa.models;
 
+import edu.upc.dsa.models.EO.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +16,8 @@ public class User {
     private Partida myCurrentPartida;
 
     private List<Partida> misPartidas;
-    private int nivel;
-
+    private int myCurrentNivel;
+    private List<Level> misNiveles;
 
     public User() {
 
@@ -32,8 +33,9 @@ public class User {
         this.id = id;
         this.puntos = 0;
         this.myCurrentPartida = new Partida();
-        this.nivel = 0;
+        this.myCurrentNivel = 0;
         this.misPartidas= new ArrayList<>();
+        this.misNiveles= new ArrayList<>();
     }
 
     public Partida getMyCurrentPartida() {
@@ -102,11 +104,11 @@ public class User {
     }
 
     public int getcurrentNivel() {
-        return nivel;
+        return myCurrentNivel;
     }
 
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
+    public void setMyCurrentNivel(int myCurrentNivel) {
+        this.myCurrentNivel = myCurrentNivel;
     }
 
     public List<Partida> getMisPartidas() {
@@ -115,5 +117,22 @@ public class User {
 
     public void setMisPartidas() {
         this.misPartidas.add(this.getMyCurrentPartida());
+    }
+
+    public void setMisPartidas(List<Partida> misPartidas) {
+        this.misPartidas = misPartidas;
+    }
+
+    public int getMyCurrentNivel() {
+        return myCurrentNivel;
+    }
+
+    public List<Level> getMisNiveles() {
+        return misNiveles;
+    }
+
+    public void addMisNiveles(int l) {
+        Level level = new Level(l);
+        misNiveles.add(level);
     }
 }

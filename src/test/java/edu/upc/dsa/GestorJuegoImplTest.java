@@ -65,7 +65,7 @@ public class GestorJuegoImplTest {
 
 
     @Test
-    public void inicarPartida() {
+    public void iniciarPartida() {
         Assert.assertEquals("22", this.gj.getUser("11111").getMyCurrentPartida().getId());
         Assert.assertEquals("22", this.gj.getUser("22222").getMyCurrentPartida().getId());
 
@@ -93,16 +93,25 @@ public class GestorJuegoImplTest {
         Assert.assertEquals(130, this.gj.puntosDeUser("22222"),1);
     }
 
-
     @Test
-    public void finalizarPartida() {
+    public void pasarNivel() {
         gj.finalizarPartida("11111");
         Assert.assertNull(this.gj.getUser("11111").getMyCurrentPartida());
     }
 
     @Test
+    public void finalizarPartida() {
+        gj.pasarNivel("11111",70,"14:16:09");
+        gj.pasarNivel("11111",50,"17:16:09");
+
+        Assert.assertEquals(2,this.gj.nivelUser("11111"));
+    }
+
+    @Test
     public void UserPartida() {
         List<User> users = this.gj.getUsersOfPartida("22");
+
+        Assert.assertEquals(2,users.size());
 
         Assert.assertEquals("11111", users.get(0).getId());
         Assert.assertEquals("22222", users.get(1).getId());
@@ -116,14 +125,29 @@ public class GestorJuegoImplTest {
 
         List<Partida> mispartidas = gj.getMyPartidas("11111");
 
+        Assert.assertEquals(2,mispartidas.size());
+
         Assert.assertEquals("22",mispartidas.get(0).getId());
         Assert.assertEquals("55",mispartidas.get(1).getId());
     }
 
+    /**
     @Test
     public void actividad() {
+        gj.iniciarPartida("33","33333");
 
+        gj.pasarNivel("33333",70,"15:16:09");
+        gj.pasarNivel("33333",50,"20:16:09");
+        gj.pasarNivel("33333",80,"10:16:09");
 
-    }
+        gj.finalizarPartida("33333");
 
+        List<DatosActivity> myActivity = gj.actividad("33333","33");
+
+        Assert.assertEquals(3,myActivity.size());
+
+        Assert.assertEquals(70,myActivity.get(0).getPuntosAct(),0);
+        Assert.assertEquals(50,myActivity.get(1).getPuntosAct(),0);
+        Assert.assertEquals(80,myActivity.get(2).getPuntosAct(),0);
+    }*/
 }

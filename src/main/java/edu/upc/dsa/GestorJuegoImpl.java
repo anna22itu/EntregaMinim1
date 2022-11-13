@@ -1,6 +1,8 @@
 package edu.upc.dsa;
 
 import edu.upc.dsa.models.*;
+import edu.upc.dsa.models.Data.*;
+import edu.upc.dsa.models.EO.*;
 import org.apache.log4j.Logger;
 
 import java.util.*;
@@ -48,6 +50,7 @@ public class GestorJuegoImpl implements GestorJuego {
             u.setMisPartidas();
             assert partida != null;
             partida.addParticipantes(u);
+            u.addMisNiveles(0);
             logger.info("La partida ha empezado");
         }
         else{
@@ -70,7 +73,7 @@ public class GestorJuegoImpl implements GestorJuego {
 
     public double puntosDeUser(String idUser){
         User u = this.users.get(idUser);
-        logger.info("los puntos del User " + u.getId() + " en la partida " + u.getMyCurrentPartida().getId() + " son " + u.getcurrentNivel());
+        logger.info("los puntos del User " + u.getId() + " en la partida " + u.getMyCurrentPartida().getId() + " son " + u.getPuntos());
         return u.getPuntos();
     }
 
@@ -81,8 +84,10 @@ public class GestorJuegoImpl implements GestorJuego {
             u.setPuntos(u.getPuntos() + 100);
             this.finalizarPartida(u.getId());
         }
-        u.setNivel(u.getcurrentNivel() + 1); // si no lo está lo cambiamos de nivel
+        u.setMyCurrentNivel(u.getcurrentNivel() + 1); // si no lo está lo cambiamos de nivel
         u.setPuntos(u.getPuntos() + puntos);
+        int l = u.getcurrentNivel();
+        u.addMisNiveles(l);
         logger.info("El User " + u.getId() + " ha pasado al nivel " + u.getcurrentNivel());
     }
 
@@ -122,11 +127,12 @@ public class GestorJuegoImpl implements GestorJuego {
         List<DatosActivity> misActividades = new ArrayList<>();
 
         User u = this.users.get(idUser);
+        List<Level> myLevels = u.getMisNiveles();
 
-        DatosPasarNivel datosPasarNivel = new DatosPasarNivel(idUser,);
-        DatosActivity datos = new DatosActivity(u.getcurrentNivel(), u.getPuntos(),);
-        misActividades.add(datos);
-
+        for (Level level: myLevels) {
+            DatosActivity datos = new DatosActivity(level,puntos,fecha);
+            misActividades.add(datos);
+        }
         return misActividades;
     }*/
 

@@ -1,8 +1,9 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.models.DatosActivity;
 import edu.upc.dsa.models.Partida;
 import edu.upc.dsa.models.User;
+import edu.upc.dsa.models.Data.*;
+
 
 import java.util.List;
 
