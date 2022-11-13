@@ -5,9 +5,7 @@ Se ha creado una interfaz GestorJuego.java donde se definen los métodos princip
 
 En GestorJuegoImpl.java se implementan todas estas funciones.
 
-Se han creado dos clases modelos principales, User y Partida con las que trabajar. También se han creado tres package en la carpeta modelos que se usarán en l parte 2 como objetos de transferencia.
-
-Funcionan todos los métodos y los tests correspondientes, menos el método de la actividad que falta corregir algunas cosas (aunque está todo planteado)
+Se han creado dos clases modelos principales, User y Partida con las que trabajar. También se han creado tres package en la carpeta modelos que se usarán en la parte 2 como objetos de transferencia. Funcionan todos los métodos y sus tests correspondientes.
 
 Se ha asumido que una partida y un juego son lo mismo (más adelante se intentará modificar esta confusión de concepto)
 
@@ -23,6 +21,7 @@ También se han definido objetos de transferencia para evitar ciclos. Tenemos tr
 
 - EO: (Extra objects): 'Level' para poder mostrar en swagger el nivel actual del jugador; 'Point' para poder mostrar en swagger los puntos actuales del jugador;
 
+Todos los métodos del servicio REST funcionan correctamente.
 
 
 
