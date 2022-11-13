@@ -29,7 +29,6 @@ public class GestorJuegoImplTest {
 
         gj.iniciarPartida("22", "11111");
         gj.iniciarPartida("22", "22222");
-
     }
 
 
